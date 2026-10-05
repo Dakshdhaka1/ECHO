@@ -140,7 +140,7 @@ function MethodSteps() {
           <span className="label">scoring.py</span>
           <span className="ml-auto rounded-[3px] border border-line-strong px-1.5 font-mono text-[10px] text-muted">python 3.12</span>
         </div>
-        <pre className="overflow-x-auto py-3 font-mono text-[12.5px] leading-6">
+        <pre tabIndex={0} aria-label="Excerpt of the scoring engine, scoring.py" className="overflow-x-auto py-3 font-mono text-[12.5px] leading-6 focus-visible:outline-1 focus-visible:outline-accent">
           {CODE.map(([kind, line], i) => (
             <div key={i} className={`flex pr-4 transition-colors duration-500 ${lit.has(i) ? 'bg-accent-soft' : ''}`}>
               <span className={`w-10 shrink-0 select-none pr-3 text-right ${lit.has(i) ? 'text-accent-ink' : 'text-muted'}`}>{String(i + 1).padStart(2, '0')}</span>
