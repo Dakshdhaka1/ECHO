@@ -16,6 +16,8 @@ echo:
     anonymous-analyses-per-hour: 1000
 
 management:
+  server:
+    port: 0   # random management port so parallel test contexts never collide
   health:
     redis:
       enabled: false

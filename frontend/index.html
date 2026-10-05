@@ -9,14 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#090a0d" />
     <meta name="description" content="ECHO - explainable corporate health intelligence from public filings, news and ML." />
+    <meta property="og:title" content="ECHO - Corporate Health Observatory" />
+    <meta property="og:description" content="A 0-100 corporate health score from SEC filings, events, news and market data, with every point traced to its source." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/icon-512.png" />
     <title>ECHO - Corporate Health Observatory</title>
-    <script>
-      // apply the saved theme before first paint (no flash)
-      try {
-        const t = localStorage.getItem('echo-theme')
-        if (t !== 'light') document.documentElement.classList.add('dark') // dark terminal theme is the default
-      } catch (e) {}
-    </script>
+    <script src="/theme-init.js"></script>
   </head>
   <body>
     <div id="root"></div>

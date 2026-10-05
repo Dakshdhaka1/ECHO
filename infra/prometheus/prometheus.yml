@@ -1,0 +1,8 @@
+# Scrapes the backend's internal management port (not published outside the compose network).
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: echo-backend
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["backend:8081"]

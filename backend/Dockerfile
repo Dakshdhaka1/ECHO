@@ -12,5 +12,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf 
 COPY --from=build /app.jar /app/app.jar
 USER echo
 EXPOSE 8080
-HEALTHCHECK --interval=15s --timeout=5s --start-period=40s --retries=8 CMD curl -fs http://localhost:8080/actuator/health || exit 1
+HEALTHCHECK --interval=15s --timeout=5s --start-period=40s --retries=8 CMD curl -fs http://localhost:8081/actuator/health || exit 1
 ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "/app/app.jar"]
