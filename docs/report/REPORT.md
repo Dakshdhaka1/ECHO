@@ -296,6 +296,35 @@ Davies–Bouldin index was 1.48 and year-over-year stability (ARI) **0.85**.
 The segments separate risk without using labels: the subsequent 12-month bankruptcy rate was **5.2 %** for
 High Risk, 1.2 % for Growth and **0.13 %** for Stable. Figure: `segments_pca.png`.
 
+### 6.8 User interface and quality assurance
+
+The web application follows the "Institutional Intelligence" design system created in Google Stitch
+(`docs/design/DESIGN.md`): a dark terminal theme by default and a light theme from the same spec, IBM Plex Sans
+with JetBrains Mono for every figure, and an emerald accent. Chart colours were re-validated for colour-vision
+deficiency, and the score-impact charts keep a blue/red diverging pair because green/red is not CVD-safe.
+
+![Company dossier](../screenshots/dossier-dark.png)
+
+*Figure: company dossier. The ring gauge, band and key metrics come from one stored report; data coverage is
+shown next to every pillar, so a stale source (for example 2021 employee reviews) is visible rather than hidden.*
+
+The **signals radar** (Compare page) plots every analysed demo report by health score against the ML 12-month
+distress probability. Case studies are drawn as dated trajectories: Bed Bath & Beyond moves from Watch
+(54, 4.8 %) in April 2022 to Weak (38, 7.8 %) in January 2023, inside the vulnerable zone, three months before
+its Chapter 11 filing. Companies without a distress estimate (banks, which the model does not cover) are listed
+rather than plotted.
+
+![Signals radar](../screenshots/signals-radar.png)
+
+Quality gates (run in CI on every push):
+
+| Layer | Checks |
+|---|---|
+| ML service | ruff lint; 21 pytest tests (leakage, attribution invariant, caps, grounding, PSI, secrets guard) |
+| Backend | 14 JUnit tests: business-rule unit tests plus Testcontainers PostgreSQL integration tests |
+| Frontend | ESLint; 10 Vitest component tests |
+| End to end | 20 Playwright tests on the running stack, including an axe WCAG 2.1 AA audit of six pages in both themes (zero serious or critical violations) |
+
 ## 7. Case studies (point-in-time, using only data filed by the date shown)
 
 | Company, as of | Score | What the public data showed |

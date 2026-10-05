@@ -91,7 +91,7 @@ export function ImpactChart({ factors, height }) {
       <BarChart data={data} layout="vertical" margin={{ left: 8, right: 24, top: 4, bottom: 4 }} barCategoryGap={6}>
         <CartesianGrid horizontal={false} />
         <XAxis type="number" {...AXIS} tickFormatter={(v) => fmtSigned(v, 0)} />
-        <YAxis type="category" dataKey="name" width={210} {...AXIS} tick={{ fontSize: 11, fill: 'var(--ink-2)' }} />
+        <YAxis type="category" dataKey="name" width={260} {...AXIS} tick={{ fontSize: 11.5, fill: 'var(--ink-2)', style: { fontFamily: 'var(--font-sans)' } }} />
         <ReferenceLine x={0} stroke="var(--axis)" />
         <Tooltip cursor={{ fill: 'var(--surface-2)' }} content={<ChartTooltip formatter={(v, k, row) => `${fmtSigned(v, 2)} pts${row.display_value ? `  (value ${row.display_value})` : ''}`} />} />
         <Bar dataKey="impact" name="Impact on score" radius={4}>
@@ -110,7 +110,7 @@ export function DriverChart({ drivers }) {
       <BarChart data={data} layout="vertical" margin={{ left: 8, right: 24, top: 4, bottom: 4 }} barCategoryGap={6}>
         <CartesianGrid horizontal={false} />
         <XAxis type="number" {...AXIS} tickFormatter={(v) => fmtSigned(v, 1)} />
-        <YAxis type="category" dataKey="name" width={220} {...AXIS} tick={{ fontSize: 11, fill: 'var(--ink-2)' }} />
+        <YAxis type="category" dataKey="name" width={260} {...AXIS} tick={{ fontSize: 11.5, fill: 'var(--ink-2)', style: { fontFamily: 'var(--font-sans)' } }} />
         <ReferenceLine x={0} stroke="var(--axis)" />
         <Tooltip cursor={{ fill: 'var(--surface-2)' }} content={<ChartTooltip formatter={(v, k, row) => `${fmtSigned(v, 3)} log-odds (value ${row.value == null ? 'n/a' : Number(row.value).toPrecision(3)})`} />} />
         <Bar dataKey="contribution" name="SHAP contribution" radius={4}>
@@ -220,7 +220,7 @@ export function CompareChart({ rows, companies, height = 300 }) {
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={rows} margin={{ left: 4, right: 12, top: 8, bottom: 0 }} barGap={2}>
         <CartesianGrid vertical={false} />
-        <XAxis dataKey="pillar" {...AXIS} tick={{ fontSize: 11, fill: 'var(--ink-2)' }} />
+        <XAxis dataKey="pillar" {...AXIS} tick={{ fontSize: 11.5, fill: 'var(--ink-2)', style: { fontFamily: 'var(--font-sans)' } }} />
         <YAxis {...AXIS} domain={[0, 100]} width={36} />
         <Tooltip cursor={{ fill: 'var(--surface-2)' }} content={<ChartTooltip formatter={(v) => Math.round(v)} />} />
         <Legend wrapperStyle={{ fontSize: 12 }} />

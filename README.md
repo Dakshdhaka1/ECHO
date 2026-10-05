@@ -16,6 +16,18 @@ source.
 | **Design docs** | [Architecture](docs/architecture/ARCHITECTURE.md) · [Data strategy](docs/architecture/DATA_STRATEGY.md) · [ML pipeline](docs/architecture/ML_PIPELINE.md) · [Scoring](docs/architecture/SCORING.md) · [Roadmap](docs/architecture/BUILD_PLAN.md) |
 | **API** | [docs/api/API.md](docs/api/API.md) · live OpenAPI at `http://localhost:8080/api/swagger-ui` |
 | **Product** | [docs/product/PRODUCT.md](docs/product/PRODUCT.md) — plans, monetisation, roadmap |
+| **UI design** | [docs/design/DESIGN.md](docs/design/DESIGN.md) — "Institutional Intelligence" system from the Google Stitch concept |
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Landing page over the Stitch silk-ribbon shader](docs/screenshots/landing-dark.png) | ![Company dossier with the ring gauge and key metrics](docs/screenshots/dossier-dark.png) |
+| Landing (dark terminal theme, WebGL hero) | Company dossier: score, band, coverage, distress estimate |
+| ![Bed Bath & Beyond, point-in-time case study](docs/screenshots/case-study-bbby.png) | ![Signals radar](docs/screenshots/signals-radar.png) |
+| Case study: BBBY as of 31 Jan 2023, using only data filed by then | Signals radar: health score vs ML distress probability, with case-study trajectories |
+| ![Every factor's contribution](docs/screenshots/why-this-score.png) | ![Model cards](docs/screenshots/models.png) |
+| "Why this score": exact additive attribution (light theme) | Model registry: each champion vs its baseline |
 
 ## Architecture
 
@@ -98,10 +110,27 @@ docker compose --env-file .env -f infra/docker/docker-compose.yml up --build
 |---|---|
 | http://localhost:5173 | ECHO web app |
 | http://localhost:8080/api/swagger-ui | API docs |
-| http://localhost:5000 | MLflow tracking UI |
+| http://localhost:5000 | MLflow tracking UI (bound to 127.0.0.1: it has no authentication) |
 
 Register with `admin@echo.local` (see `ADMIN_EMAILS`) to get the **Admin & MLOps** page.
 `ML_INSTALL_TRAINING=false` builds a slim ML image without the training stack.
+
+Model binaries (`*.onnx`, `*.joblib`) are stored with **Git LFS**: run `git lfs install` before cloning, or
+`git lfs pull` afterwards, so the trained champions (including the 79 MB news-sentiment transformer) are present.
+
+**Production mode** (`DEMO_MODE=false`): the backend and ML service refuse to start while any secret in `.env`
+is still a `change_me` placeholder, and Swagger/OpenAPI is off unless `API_DOCS_ENABLED=true`.
+
+### Operations
+
+| Task | Command (from the repository root) |
+|---|---|
+| Back up Postgres | `infra/scripts/backup-postgres.sh` (or `.ps1` on Windows) → `backups/echo-<timestamp>.sql[.gz]`, keeps 14 |
+| Restore a backup | `infra/scripts/restore-postgres.sh backups/<file>.sql.gz` (overwrites the database) |
+| Metrics | `docker compose --env-file .env -f infra/docker/docker-compose.yml --profile monitoring up -d` → Prometheus at http://localhost:9090 scraping the backend's internal `/actuator/prometheus` (port 8081, not published) |
+
+Security headers (CSP without inline scripts, nosniff, frame denial, referrer and permissions policies) are
+set by the frontend's nginx.
 
 ### Option B — local development
 
@@ -170,10 +199,15 @@ the Admin page or happens monthly / on drift via the backend scheduler.
 ## Tests
 
 ```bash
-cd ml-service && python -m pytest            # 18 tests: point-in-time leakage, Q4 derivation, attribution invariant, caps, grounding, PSI, splits
-cd backend && mvn test                       # Testcontainers Postgres: migrations + full API journey (auth → job → report → alerts → exports → API key → RBAC)
-cd frontend && npm test                      # formatting, accessible status encoding, report page 202→poll→render
+cd ml-service && ruff check app pipelines tests && python -m pytest   # 21 tests: point-in-time leakage, Q4 derivation, attribution invariant, caps, grounding, PSI, splits, secrets guard
+cd backend && ./mvnw test                    # 14 tests: unit (plan quotas, rate limiter, alert rules, radar, secrets guard) + Testcontainers Postgres (migrations, full API journey)
+cd frontend && npm run lint && npm test      # 10 tests: formatting, accessible status encoding, report 202→poll→render, landing, search, pillars, pricing
+cd frontend && npm run test:e2e              # 20 Playwright tests against the running stack: user journeys, radar, no horizontal overflow
+                                             # (390/768/1440 px), security headers, axe WCAG 2.1 AA audit of 6 pages in both themes
 ```
+
+GitHub Actions ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs all of the above on every push and
+pull request; the e2e job builds and starts the full Docker stack in demo mode first.
 
 ## Data sources and licences
 

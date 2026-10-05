@@ -46,7 +46,11 @@ Authentication: `Authorization: Bearer <JWT>` from `/api/auth/login`, or `X-API-
 | GET / POST | `/admin/retrain` | admin | Retraining jobs / start one `{model, promote}` |
 | GET | `/admin/ml-health` | admin | ML service health and loaded model versions |
 
-Actuator: `/actuator/health` (liveness/readiness probes), `/actuator/info`, `/actuator/metrics` (admin).
+Actuator (internal management port 8081, not published by Docker Compose): `/actuator/health` (liveness/readiness
+probes), `/actuator/info`, `/actuator/metrics`, `/actuator/prometheus`.
+
+`GET /api/radar` (public): the latest stored report for every demo-universe (company, as-of) pair, with health
+score, band, distress probability and signal count, plus the pairs not analysed yet. Read-only: it never starts an analysis.
 
 ## Internal ML-service API (`ml-service:8000`, not exposed by Docker Compose)
 
