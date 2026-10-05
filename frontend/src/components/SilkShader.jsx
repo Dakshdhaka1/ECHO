@@ -46,8 +46,6 @@ void main() {
 export default function SilkShader({ className = '', scale = 0.6 }) {
   const canvas = useRef(null)
   const { dark } = useTheme()
-  const lightRef = useRef(dark ? 0 : 1)
-  lightRef.current = dark ? 0 : 1
 
   useEffect(() => {
     const el = canvas.current
@@ -83,7 +81,7 @@ export default function SilkShader({ className = '', scale = 0.6 }) {
       gl.uniform1f(uTime, ms * 0.001)
       gl.uniform2f(uRes, el.width, el.height)
       gl.uniform2f(uMouse, mouse.x * el.width, mouse.y * el.height)
-      gl.uniform1f(uLight, lightRef.current)
+      gl.uniform1f(uLight, dark ? 0 : 1)
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
     }
 
@@ -113,7 +111,7 @@ export default function SilkShader({ className = '', scale = 0.6 }) {
       window.removeEventListener('pointermove', onMove)
       document.removeEventListener('visibilitychange', onVisibility)
     }
-  }, [scale])
+  }, [scale, dark])
 
   return <canvas ref={canvas} className={`block h-full w-full ${className}`} aria-hidden />
 }

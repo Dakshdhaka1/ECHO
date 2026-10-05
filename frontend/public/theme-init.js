@@ -2,6 +2,6 @@
 // Content-Security-Policy can forbid inline scripts. The dark terminal theme is the default.
 try {
   if (localStorage.getItem('echo-theme') !== 'light') document.documentElement.classList.add('dark')
-} catch (e) {
+} catch {
   document.documentElement.classList.add('dark')
 }

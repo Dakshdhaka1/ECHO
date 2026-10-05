@@ -3,9 +3,8 @@
 from datetime import date
 
 import numpy as np
-import pytest
-
 import pandas as pd
+import pytest
 
 from app.inference.scoring import ScoringInputs, band_for, market_metrics, score_company
 

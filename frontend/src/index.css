@@ -41,6 +41,7 @@
   --serious: #ec835a;
   --critical: #d03b3b;
   --good-text: #1b5e3c;
+  --serious-text: #a3431c;     /* text-safe step of the serious status colour */
   --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
 }
@@ -53,7 +54,7 @@
   --surface-3: #1b1f29;
   --ink: #e5e7eb;
   --ink-2: #a3aab6;
-  --muted: #737b88;
+  --muted: #848c99;            /* >= 4.5:1 on every dark surface (WCAG AA) */
   --line: #1b1f29;
   --line-strong: #2b3446;
   --axis: #2b3446;
@@ -75,6 +76,7 @@
   --div-neg: #e66767;
   --div-mid: #2b3446;
   --good-text: #4edea3;
+  --serious-text: #f0956f;
 }
 
 @theme inline {
@@ -97,6 +99,7 @@
   --color-serious: var(--serious);
   --color-critical: var(--critical);
   --color-good-text: var(--good-text);
+  --color-serious-text: var(--serious-text);
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
@@ -169,8 +172,10 @@
     animation: shimmer 1.6s var(--ease-spring) infinite;
   }
 
-  .link { color: var(--accent-ink); text-underline-offset: 3px; transition: color 0.2s var(--ease-fluid); }
-  .link:hover { text-decoration: underline; }
+  /* underlined so links inside text are not distinguished by colour alone (WCAG 1.4.1) */
+  .link { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+          text-decoration-color: color-mix(in oklab, var(--accent-ink) 40%, transparent); transition: text-decoration-color 0.2s var(--ease-fluid); }
+  .link:hover { text-decoration-color: currentColor; }
 
   kbd { font-family: var(--font-mono); font-size: 0.6875rem; border: 1px solid var(--line-strong); border-radius: 0.25rem; padding: 0 0.35rem; color: var(--muted); background: var(--surface-2); }
 }

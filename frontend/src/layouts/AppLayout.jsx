@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Bell, LogOut, Moon, Sun } from '../components/icons'
@@ -54,15 +54,16 @@ const iconButton = 'grid h-8 w-8 place-items-center rounded-[5px] text-ink-2 tra
 export default function AppLayout() {
   const { user, me, isAdmin, logout } = useAuth()
   const { dark, toggle } = useTheme()
-  const [menu, setMenu] = useState(false)
+  // the menu belongs to the page it was opened on, so navigating closes it without an effect
+  const [menuPath, setMenuPath] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
   const pulse = usePlatformPulse()
   const links = [...NAV.filter((n) => !n.auth || user), ...(isAdmin ? [{ to: '/admin', label: 'Admin' }] : [])]
   const landing = location.pathname === '/'
   const online = pulse.isSuccess
-
-  useEffect(() => { setMenu(false) }, [location.pathname])
+  const menu = menuPath === location.pathname
+  const setMenu = (open) => setMenuPath(open ? location.pathname : null)
 
   return (
     <div className="flex min-h-[100dvh] flex-col">

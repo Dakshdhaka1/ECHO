@@ -105,7 +105,7 @@ def train(config: dict) -> dict:
     model = ReviewModel(best, vec, nmf, names)
 
     esi = []
-    for firm, g in te.groupby("firm"):
+    for _firm, g in te.groupby("firm"):
         if len(g) >= 30:
             idx = model.sentiment_index(g)
             esi.append(idx[idx["reviews"] >= 10])

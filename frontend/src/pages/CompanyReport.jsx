@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   AlertTriangle, BellPlus, BrainCircuit, Database, Download, ExternalLink, FileText, GitCompare, History as HistoryIcon,
@@ -15,7 +15,7 @@ import {
 import { useAuth } from '../context/AuthContext'
 import { useReport } from '../hooks/useReport'
 import { api } from '../services/api'
-import { BANDS, RISK_BANDS, fmtDate, fmtMoney, fmtNum, fmtPct, fmtSigned, humanize } from '../utils/format'
+import { RISK_BANDS, fmtDate, fmtMoney, fmtNum, fmtPct, fmtSigned, humanize } from '../utils/format'
 
 // ---------------------------------------------------------------------------------------------- page
 export default function CompanyReport() {
@@ -118,7 +118,6 @@ function ReportHeader({ company, report, asOf }) {
 
   if (!c) return <Skeleton className="h-56" />
   const ticker = c.ticker || `CIK${Number(c.marketId)}`
-  const band = BANDS[report?.band] || BANDS.INSUFFICIENT_DATA
   return (
     <div className="space-y-4 animate-rise">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -206,7 +205,12 @@ const BAND_TEXT = {
 
 function JobProgress({ job, stale }) {
   const steps = ['Fetching SEC filings and news', 'Building point-in-time features', 'Running ML models', 'Scoring and explaining']
-  const elapsed = job?.startedAt ? Math.max(0, (Date.now() - new Date(job.startedAt).getTime()) / 1000) : 0
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(t)
+  }, [])
+  const elapsed = job?.startedAt ? Math.max(0, (now - new Date(job.startedAt).getTime()) / 1000) : 0
   const current = job?.status === 'QUEUED' ? -1 : Math.min(steps.length - 1, Math.floor(elapsed / 2))
   return (
     <div className="card overflow-hidden p-5 animate-rise" role="status" aria-live="polite">

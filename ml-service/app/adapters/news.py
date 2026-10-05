@@ -103,7 +103,7 @@ class GdeltNewsSource:
         cached = self.cache.get_json(key)
         if cached is not None:
             return cached
-        for attempt in range(4):
+        for _attempt in range(4):
             with self._lock:
                 wait = MIN_GAP_SECONDS - (time.monotonic() - self._last)
                 if wait > 0:

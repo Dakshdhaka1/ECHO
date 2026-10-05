@@ -143,7 +143,7 @@ function MethodSteps() {
         <pre className="overflow-x-auto py-3 font-mono text-[12.5px] leading-6">
           {CODE.map(([kind, line], i) => (
             <div key={i} className={`flex pr-4 transition-colors duration-500 ${lit.has(i) ? 'bg-accent-soft' : ''}`}>
-              <span className={`w-10 shrink-0 select-none pr-3 text-right ${lit.has(i) ? 'text-accent-ink' : 'text-muted/60'}`}>{String(i + 1).padStart(2, '0')}</span>
+              <span className={`w-10 shrink-0 select-none pr-3 text-right ${lit.has(i) ? 'text-accent-ink' : 'text-muted'}`}>{String(i + 1).padStart(2, '0')}</span>
               <code className={kind === 'c' ? 'text-muted' : kind === 'f' ? 'text-accent-ink' : 'text-ink-2'}>{line || ' '}</code>
             </div>
           ))}
@@ -226,7 +226,7 @@ export default function Landing() {
                   <Link key={c.companyId} to={`/company/${c.companyId}${(c.asOf || []).includes('latest') ? '' : `?asOf=${c.asOf[c.asOf.length - 1]}`}`} tabIndex={copy ? -1 : 0}
                         className="flex items-center gap-2.5 whitespace-nowrap px-5 font-mono text-[11px] uppercase tracking-wider text-muted transition-colors hover:text-ink">
                     <span className="font-medium text-ink">{c.ticker}</span>
-                    <span className={c.role === 'historical_distress' ? 'text-serious' : c.role === 'mixed' ? 'text-ink-2' : 'text-accent-ink'}>{ROLE_TAG[c.role]}</span>
+                    <span className={c.role === 'historical_distress' ? 'text-serious-text' : c.role === 'mixed' ? 'text-ink-2' : 'text-accent-ink'}>{ROLE_TAG[c.role]}</span>
                     <span className="text-line-strong">///</span>
                   </Link>
                 ))}

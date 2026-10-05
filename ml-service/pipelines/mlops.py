@@ -176,7 +176,7 @@ def finish_run(run: TrainingRun, config: dict, *, promote: bool | None = None) -
         (export_dir / "model_card.json").write_text(json.dumps(card, indent=2, default=str))
         mlflow.log_artifacts(str(export_dir), artifact_path="export")
         mlflow.set_tag("gate_passed", str(passed))
-        for name, path in run.figures.items():
+        for path in run.figures.values():
             mlflow.log_artifact(str(path), artifact_path="figures")
         try:
             info = mlflow.pyfunc.log_model(name="model", python_model=EchoExportModel(),

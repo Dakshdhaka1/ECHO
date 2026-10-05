@@ -58,7 +58,7 @@ export function PillarBars({ pillars, context = {} }) {
             <div className="mt-1 font-mono text-[11px] text-muted">
               weight {Math.round((p.effective_weight || 0) * 100)}%
               {p.score != null && p.coverage != null && (
-                <> // <span className={p.coverage < 0.5 ? 'text-serious' : ''} title="Share of this pillar's evidence that is available and fresh">coverage {Math.round(p.coverage * 100)}%</span></>
+                <> // <span className={p.coverage < 0.5 ? 'text-serious-text' : ''} title="Share of this pillar's evidence that is available and fresh">coverage {Math.round(p.coverage * 100)}%</span></>
               )}
             </div>
             {context[p.key] && <div className="mt-0.5 font-mono text-[11px] text-muted">{context[p.key]}</div>}

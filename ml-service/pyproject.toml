@@ -23,8 +23,14 @@ pythonpath = ["."]
 testpaths = ["tests"]
 
 [tool.ruff]
-line-length = 110
+line-length = 120
 target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+# E501: long lines are left to review (no auto-formatter is enforced); UP046: Generic[T] kept for readability
+ignore = ["E501", "UP046"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI dependency injection uses calls in parameter defaults by design
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Header", "fastapi.Query"]
