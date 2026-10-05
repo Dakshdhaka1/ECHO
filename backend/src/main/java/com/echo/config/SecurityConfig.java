@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/docs/**", "/api/swagger-ui/**", "/api/swagger-ui.html").permitAll()
                 .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/companies/**", "/api/jobs/**", "/api/reports/**", "/api/compare", "/api/models",
-                                 "/api/billing/plans", "/api/universe", "/api/stats").permitAll()
+                                 "/api/billing/plans", "/api/universe", "/api/stats", "/api/radar").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
             .oauth2ResourceServer(o -> o.jwt(j -> j.jwtAuthenticationConverter(jwtAuthenticationConverter())))

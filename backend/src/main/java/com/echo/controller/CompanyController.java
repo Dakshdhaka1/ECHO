@@ -3,6 +3,7 @@ package com.echo.controller;
 import com.echo.dto.Dtos.AnalyzeRequest;
 import com.echo.dto.Dtos.CompanyDto;
 import com.echo.dto.Dtos.CompareItemDto;
+import com.echo.dto.Dtos.RadarDto;
 import com.echo.dto.Dtos.HistoryPointDto;
 import com.echo.dto.Dtos.JobDto;
 import com.echo.dto.Dtos.ReportDto;
@@ -97,6 +98,12 @@ public class CompanyController {
                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
         return insights.history(id, from, to, CurrentUser.id().orElse(null));
+    }
+
+    @GetMapping("/radar")
+    @Operation(summary = "Signals radar: health score vs distress probability for every analysed demo-universe report")
+    public RadarDto radar() {
+        return insights.radar();
     }
 
     @GetMapping("/compare")

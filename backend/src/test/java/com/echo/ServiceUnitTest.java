@@ -21,13 +21,18 @@ import com.echo.model.Report;
 import com.echo.model.UsageEvent;
 import com.echo.model.User;
 import com.echo.repository.AlertRepository;
+import com.echo.repository.ReportRepository;
+import com.echo.repository.ScorePointRepository;
 import com.echo.repository.UsageEventRepository;
 import com.echo.repository.UserRepository;
 import com.echo.repository.WatchlistItemRepository;
 import com.echo.service.AlertService;
+import com.echo.service.CompanyService;
+import com.echo.service.InsightService;
 import com.echo.service.PlanService;
 import com.echo.service.RateLimiter;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -183,5 +188,38 @@ class ServiceUnitTest {
                 .hasMessageContaining("JWT_SECRET");
         new SecretsGuard(props(true, placeholderJwt, "change_me_admin_token"), "change_me").check();  // demo: warn only
         new SecretsGuard(props(false, "a-very-long-real-secret-value-of-48-bytes-xxxxxx", "real-token"), "real-db").check();
+    }
+
+    // ------------------------------------------------------------------------------------------ radar
+    @Test
+    void radarReturnsStoredReportsAndListsUnanalysedPairs() {
+        CompanyService companies = mock(CompanyService.class);
+        ReportRepository reports = mock(ReportRepository.class);
+        JsonNode apple = JsonMapper.shared().readTree(
+                "{\"companyId\":1,\"ticker\":\"AAPL\",\"name\":\"Apple Inc.\",\"role\":\"healthy\",\"asOf\":[\"latest\"]}");
+        JsonNode bbby = JsonMapper.shared().readTree(
+                "{\"companyId\":10,\"ticker\":\"BBBY\",\"name\":\"Bed Bath\",\"role\":\"historical_distress\","
+                        + "\"asOf\":[\"2022-04-30\",\"2023-01-31\"]}");
+        when(companies.universe()).thenReturn(List.of(apple, bbby));
+        Report live = report((short) 68, "STABLE");
+        when(live.getPayload()).thenReturn("{\"signals\":[],\"distress\":{\"base_rate\":0.012},"
+                + "\"pillars\":[{\"key\":\"financial\",\"score\":69.9}]}");
+        when(live.getId()).thenReturn(101L);
+        Report caseStudy = report((short) 21, "CRITICAL");
+        when(caseStudy.getId()).thenReturn(102L);
+        when(caseStudy.getAsOf()).thenReturn(LocalDate.parse("2023-01-31"));
+        when(caseStudy.getPayload()).thenReturn("{\"signals\":[{\"code\":\"GOING_CONCERN\"}],\"pillars\":[]}");
+        when(reports.findFirstByCompanyIdAndCaseStudyFalseOrderByGeneratedAtDesc(1L)).thenReturn(Optional.of(live));
+        when(reports.findFirstByCompanyIdAndAsOfOrderByGeneratedAtDesc(10L, LocalDate.parse("2022-04-30"))).thenReturn(Optional.empty());
+        when(reports.findFirstByCompanyIdAndAsOfOrderByGeneratedAtDesc(10L, LocalDate.parse("2023-01-31"))).thenReturn(Optional.of(caseStudy));
+
+        var radar = new InsightService(mock(ScorePointRepository.class), reports, companies, mock(PlanService.class)).radar();
+        assertThat(radar.points()).hasSize(2);
+        assertThat(radar.points().get(0).financialScore()).isEqualTo(69.9);
+        assertThat(radar.points().get(0).distressBaseRate()).isEqualTo(0.012);
+        assertThat(radar.points().get(0).caseStudy()).isFalse();
+        assertThat(radar.points().get(1).caseStudy()).isTrue();
+        assertThat(radar.points().get(1).signals()).isEqualTo(1);
+        assertThat(radar.pending()).singleElement().satisfies(p -> assertThat(p.asOf()).isEqualTo("2022-04-30"));
     }
 }

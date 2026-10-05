@@ -36,10 +36,20 @@ test('historical case study is analysed only with data public before the event',
   await expect(page.getByText('Historical case study.')).toBeVisible({ timeout: 45_000 })
 })
 
+test('signals radar plots analysed reports and adds a company to the comparison', async ({ page }) => {
+  await page.goto('/compare')
+  const radar = page.locator('section', { hasText: 'Signals radar' })
+  const apple = radar.locator('svg text', { hasText: /^AAPL$/ })  // the chart label, not the table cell
+  await expect(apple).toBeVisible({ timeout: 20_000 })
+  await apple.click()
+  await expect(page).toHaveURL(/ids=\d+/)
+  await expect(page.getByRole('heading', { name: 'Side by side' })).toBeVisible()
+})
+
 for (const width of [390, 768, 1440]) {
   test(`no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
-    for (const path of ['/', '/pricing', '/models', '/company/1']) {
+    for (const path of ['/', '/pricing', '/models', '/company/1', '/compare']) {
       await page.goto(path)
       await page.waitForLoadState('networkidle')
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)

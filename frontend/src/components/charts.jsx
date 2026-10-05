@@ -1,10 +1,10 @@
 // Chart components. Rules (dataviz skill): one y-axis per chart, thin marks, hairline grid, 4px rounded bar
 // ends, hover tooltips everywhere, legends for >= 2 series, colours from the validated palette tokens.
 import {
-  Area, Bar, BarChart, CartesianGrid, Cell, ComposedChart, Legend, Line, LineChart, ReferenceLine, ResponsiveContainer,
-  Scatter, Tooltip, XAxis, YAxis,
+  Area, Bar, BarChart, CartesianGrid, Cell, ComposedChart, Legend, Line, LineChart, ReferenceArea, ReferenceLine,
+  ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis,
 } from 'recharts'
-import { BANDS, fmtDate, fmtMoney, fmtShortDate, fmtSigned } from '../utils/format'
+import { BANDS, fmtDate, fmtMoney, fmtPct, fmtShortDate, fmtSigned } from '../utils/format'
 import { CountUp } from './motion'
 import { ChartTooltip } from './ui'
 
@@ -228,6 +228,96 @@ export function CompareChart({ rows, companies, height = 300 }) {
           <Bar key={c.id} dataKey={`c${c.id}`} name={c.ticker || c.name} fill={slots[i % slots.length]} radius={[4, 4, 0, 0]} maxBarSize={28} />
         ))}
       </BarChart>
+    </ResponsiveContainer>
+  )
+}
+
+// ------------------------------------------------------------------------------------------------ signals radar
+const RADAR_FLOOR = 0.0001  // estimates are stored to 4 decimals: 0.01% means "0.01% or less"
+const RADAR_MIN = 0.00004   // axis floor, leaves room under the lowest points
+
+/** One radar point: band status colour (the label carries identity, never colour alone) with a surface ring. */
+function RadarDot({ cx, cy, payload, onPick }) {
+  if (cx == null || cy == null) return null
+  const color = (BANDS[payload.band] || BANDS.INSUFFICIENT_DATA).color
+  return (
+    <g style={{ cursor: 'pointer' }} onClick={() => onPick?.(payload)}>
+      <circle cx={cx} cy={cy} r={14} fill="transparent" />
+      <circle cx={cx} cy={cy} r={payload.isLast ? 6 : 4} fill={color} stroke="var(--surface)" strokeWidth={2} />
+      {payload.label && (
+        <text x={cx + 9} y={cy + 4} fontSize={11} fontFamily="var(--font-mono)" fill="var(--ink)">{payload.label}</text>
+      )}
+    </g>
+  )
+}
+
+function RadarTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null
+  const p = payload[0].payload
+  return (
+    <div className="rounded-md border border-line-strong bg-surface px-3 py-2 text-xs shadow-[var(--shadow-pop)]">
+      <div className="font-medium text-ink">{p.name} <span className="font-mono text-muted">{p.ticker}</span></div>
+      <div className="mt-0.5 font-mono text-[11px] text-muted">{p.caseStudy ? `as of ${fmtDate(p.asOf)}` : 'latest report'}</div>
+      <div className="mt-1.5 grid grid-cols-[auto_auto] gap-x-4 gap-y-0.5 text-ink-2">
+        <span>Health score</span><span className="text-right font-mono text-ink">{p.healthScore} ({(BANDS[p.band] || {}).label})</span>
+        <span>Distress 12m (ML)</span><span className="text-right font-mono text-ink">{p.y <= RADAR_FLOOR ? '0.01% or less' : fmtPct(p.y, 2)}</span>
+        <span>Warning signals</span><span className="text-right font-mono text-ink">{p.signals}</span>
+      </div>
+      <div className="mt-1.5 text-[11px] text-muted">{p.caseStudy ? 'Click to open the point-in-time dossier' : 'Click to add to the comparison'}</div>
+    </div>
+  )
+}
+
+/** Health score (x) against ML distress probability (y, log). Case studies are drawn as dated trajectories. */
+export function SignalsRadar({ points, onPick, height = 380 }) {
+  const byCompany = new Map()
+  for (const p of points.filter((q) => q.healthScore != null && q.distressProbability != null)) {
+    const y = Math.max(RADAR_FLOOR, Number(p.distressProbability))
+    const list = byCompany.get(p.companyId) || []
+    list.push({ ...p, x: p.healthScore, y })
+    byCompany.set(p.companyId, list)
+  }
+  const series = [...byCompany.values()].map((list) => {
+    const sorted = [...list].sort((a, b) => String(a.asOf).localeCompare(String(b.asOf)))
+    return sorted.map((q, i) => ({ ...q, isLast: i === sorted.length - 1 }))
+  })
+  // companies sharing a position get one combined label ("MSFT, GOOGL") instead of overprinting
+  const labels = new Map()
+  for (const q of series.flatMap((s) => s.filter((p) => p.isLast))) {
+    const key = `${q.x}|${q.y}`
+    labels.set(key, [...(labels.get(key) || []), q.ticker])
+  }
+  for (const s of series) {
+    for (const q of s) {
+      const key = `${q.x}|${q.y}`
+      const group = labels.get(key)
+      q.label = q.isLast && group?.[0] === q.ticker ? group.join(', ') : null
+    }
+  }
+  const baseRate = points.find((p) => p.distressBaseRate != null)?.distressBaseRate ?? 0.012
+  return (
+    <ResponsiveContainer width="100%" height={height}>
+      <ScatterChart margin={{ left: 4, right: 36, top: 12, bottom: 18 }}>
+        <CartesianGrid />
+        <ReferenceArea x1={0} x2={40} y1={baseRate} y2={1} fill="var(--critical)" fillOpacity={0.06} stroke="none"
+                       label={{ value: 'VULNERABLE', position: 'insideTopLeft', fontSize: 10, fill: 'var(--muted)', fontFamily: 'var(--font-mono)' }} />
+        <ReferenceArea x1={55} x2={100} y1={RADAR_MIN} y2={baseRate} fill="var(--good)" fillOpacity={0.05} stroke="none"
+                       label={{ value: 'RESILIENT', position: 'insideBottomRight', fontSize: 10, fill: 'var(--muted)', fontFamily: 'var(--font-mono)' }} />
+        <ReferenceLine y={baseRate} stroke="var(--axis)" strokeDasharray="4 4"
+                       label={{ value: `test-set base rate ${fmtPct(baseRate, 1)}`, position: 'insideTopRight', fontSize: 10, fill: 'var(--muted)' }} />
+        <ReferenceLine x={55} stroke="var(--axis)" strokeDasharray="4 4" />
+        <XAxis type="number" dataKey="x" domain={[0, 100]} ticks={[0, 25, 40, 55, 70, 100]} {...AXIS}
+               label={{ value: 'Health score (higher = more resilient)', position: 'insideBottom', offset: -12, fontSize: 11, fill: 'var(--muted)' }} />
+        <YAxis type="number" dataKey="y" scale="log" domain={[RADAR_MIN, 1]} ticks={[0.0001, 0.001, 0.01, 0.1, 1]} allowDataOverflow
+               width={58} {...AXIS} tickFormatter={(v) => (v <= RADAR_FLOOR ? '0.01%' : fmtPct(v, v < 0.01 ? 1 : 0))}
+               label={{ value: 'Distress 12m (ML, log)', angle: -90, position: 'insideLeft', offset: 2, fontSize: 11, fill: 'var(--muted)', style: { textAnchor: 'middle' } }} />
+        <Tooltip cursor={false} content={<RadarTooltip />} />
+        {series.map((data) => (
+          <Scatter key={data[0].companyId} name={data[0].ticker} data={data} isAnimationActive
+                   line={data.length > 1 ? { stroke: 'var(--line-strong)', strokeWidth: 1.5, strokeDasharray: '3 3' } : false}
+                   shape={(props) => <RadarDot {...props} onPick={onPick} />} />
+        ))}
+      </ScatterChart>
     </ResponsiveContainer>
   )
 }

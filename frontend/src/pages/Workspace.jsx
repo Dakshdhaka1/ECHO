@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { CompareChart } from '../components/charts'
+import { CompareChart, SignalsRadar } from '../components/charts'
 import SearchBox from '../components/SearchBox'
 import { Bell, CheckCheck, Eye, GitCompare, Plus, Search, Trash2, X } from '../components/icons'
 import { BandBadge, Button, Card, EmptyState, ErrorState, PageHeader, SeverityDot, Skeleton } from '../components/ui'
 import { useAuth } from '../context/AuthContext'
 import { api } from '../services/api'
-import { fmtDate, fmtPct, PILLAR_ORDER } from '../utils/format'
+import { BANDS, fmtDate, fmtPct, PILLAR_ORDER } from '../utils/format'
 
 // ------------------------------------------------------------------------------------------- search
 export function SearchResults() {
@@ -54,6 +54,12 @@ export function Compare() {
     return row
   })
   const missing = items.filter((i) => !i.reportId)
+  const navigate = useNavigate()
+  const radar = useQuery({ queryKey: ['radar'], queryFn: () => api.get('/radar'), staleTime: 60_000 })
+  const pickFromRadar = (p) => {
+    if (p.caseStudy) navigate(`/company/${p.companyId}?asOf=${p.asOf}`)
+    else if (!ids.includes(String(p.companyId))) setIds([...ids, String(p.companyId)])
+  }
 
   return (
     <div className="space-y-6">
@@ -61,7 +67,8 @@ export function Compare() {
                   action={<div className="w-full max-w-md"><SearchBox onPick={(c) => !ids.includes(String(c.id)) && setIds([...ids, String(c.id)])} /></div>}>
         Pillar scores side by side, each from the company's latest report.
       </PageHeader>
-      {ids.length === 0 && <EmptyState icon={GitCompare} title="Pick companies to compare">Search above to add companies. Free: 2, Pro: 4, Enterprise: 8.</EmptyState>}
+      <RadarCard radar={radar} onPick={pickFromRadar} />
+      {ids.length === 0 && <EmptyState icon={GitCompare} title="Pick companies to compare">Click a company on the radar or search above to add it. Free: 2, Pro: 4, Enterprise: 8.</EmptyState>}
       {data.error && <ErrorState error={data.error} />}
       {data.isLoading && <Skeleton className="h-80" />}
       {missing.length > 0 && (
@@ -98,6 +105,57 @@ export function Compare() {
         </>
       )}
     </div>
+  )
+}
+
+function RadarCard({ radar, onPick }) {
+  const points = radar.data?.points || []
+  const pending = radar.data?.pending || []
+  const unplotted = points.filter((p) => p.distressProbability == null)
+  return (
+    <Card title="Signals radar" subtitle="Health score against the ML 12-month distress probability for every analysed demo report. Case studies trace their path to the event."
+          action={<span className="font-mono text-[10.5px] uppercase tracking-wider text-muted">{points.length} reports</span>}>
+      {radar.isLoading ? <Skeleton className="h-80" /> : radar.error ? <ErrorState error={radar.error} onRetry={radar.refetch} /> : points.length === 0 ? (
+        <EmptyState title="No analysed reports yet">Open a company from the home page to generate its first report.</EmptyState>
+      ) : (
+        <>
+          <SignalsRadar points={points} onPick={onPick} />
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-2">
+            {['STRONG', 'STABLE', 'WATCH', 'WEAK', 'CRITICAL'].map((b) => (
+              <span key={b} className="inline-flex items-center gap-1.5">
+                <span className="status-dot h-2 w-2 rounded-full" style={{ background: BANDS[b].color }} aria-hidden />{BANDS[b].label}
+              </span>
+            ))}
+            <span className="inline-flex items-center gap-1.5"><span className="h-px w-5 border-t border-dashed border-line-strong" aria-hidden />case-study trajectory</span>
+            {pending.length > 0 && <span className="ml-auto text-muted">{pending.length} demo reports not analysed yet</span>}
+          </div>
+          {unplotted.length > 0 && (
+            <p className="mt-2 text-xs text-muted">
+              Not plotted (no ML distress estimate): {[...new Set(unplotted.map((p) => p.ticker))].join(', ')}
+              {unplotted[0].distressUnavailableReason ? ` (${unplotted[0].distressUnavailableReason})` : ''}. They are listed in the table below.
+            </p>
+          )}
+          <details className="mt-3 text-sm">
+            <summary className="link cursor-pointer text-xs">Radar data as a table</summary>
+            <div className="mt-2 overflow-x-auto">
+              <table className="w-full min-w-[560px] text-xs">
+                <thead><tr className="border-b border-line text-left">{['Company', 'As of', 'Health score', 'Band', 'Distress 12m', 'Signals'].map((h) => <th key={h} className="label py-1.5 pr-3 font-medium">{h}</th>)}</tr></thead>
+                <tbody>{points.map((p) => (
+                  <tr key={`${p.companyId}-${p.asOf}`} className="border-b border-line last:border-0">
+                    <td className="py-1.5 pr-3 text-ink">{p.name} <span className="font-mono text-muted">{p.ticker}</span></td>
+                    <td className="py-1.5 pr-3 font-mono text-ink-2">{p.caseStudy ? fmtDate(p.asOf) : 'latest'}</td>
+                    <td className="py-1.5 pr-3 font-mono text-ink">{p.healthScore ?? '-'}</td>
+                    <td className="py-1.5 pr-3">{p.band && <BandBadge band={p.band} />}</td>
+                    <td className="py-1.5 pr-3 font-mono text-ink-2">{p.distressProbability != null ? fmtPct(Number(p.distressProbability), 2) : '-'}</td>
+                    <td className="py-1.5 font-mono text-ink-2">{p.signals}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          </details>
+        </>
+      )}
+    </Card>
   )
 }
 

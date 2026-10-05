@@ -109,6 +109,20 @@ public final class Dtos {
                                  JsonNode segment, int signals) {
     }
 
+    /** One analysed (company, as-of) point of the demo universe for the signals radar. */
+    public record RadarPointDto(Long companyId, String ticker, String name, String role, boolean caseStudy,
+                                LocalDate asOf, Long reportId, Short healthScore, String band, BigDecimal confidence,
+                                BigDecimal distressProbability, Double distressBaseRate, String distressUnavailableReason,
+                                Double financialScore, int signals) {
+    }
+
+    /** Radar points plus the (company, as-of) pairs of the demo universe that have no report yet. */
+    public record RadarDto(List<RadarPointDto> points, List<RadarPendingDto> pending) {
+    }
+
+    public record RadarPendingDto(Long companyId, String ticker, String asOf) {
+    }
+
     // ------------------------------------------------------------------ watchlists & alerts
     public record CreateWatchlistRequest(@NotBlank @Size(max = 100) String name) {
     }
