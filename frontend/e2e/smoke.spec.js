@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 
+const AAPL = process.env.E2E_AAPL_ID || '1'
+
 // User-level smoke tests: the main journeys render with no browser errors and no horizontal scrolling.
 function trackErrors(page) {
   const errors = []
@@ -32,7 +34,8 @@ test('search opens a company dossier with an explained score', async ({ page }) 
 
 test('historical case study is analysed only with data public before the event', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('link', { name: /as of 31 Jan 2023/ }).first().click()
+  // date text follows the browser locale ("31 Jan 2023" or "Jan 31, 2023")
+  await page.getByRole('link', { name: /as of (31 Jan 2023|Jan 31, 2023)/ }).first().click()
   await expect(page.getByText('Historical case study.')).toBeVisible({ timeout: 45_000 })
 })
 
@@ -49,7 +52,7 @@ test('signals radar plots analysed reports and adds a company to the comparison'
 for (const width of [390, 768, 1440]) {
   test(`no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
-    for (const path of ['/', '/pricing', '/models', '/company/1', '/compare']) {
+    for (const path of ['/', '/pricing', '/models', `/company/${AAPL}`, '/compare']) {
       await page.goto(path)
       await page.waitForLoadState('networkidle')
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)

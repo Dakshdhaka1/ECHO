@@ -2,7 +2,8 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
 // WCAG 2.1 AA audit of the main pages in both themes. Serious and critical violations fail the build.
-const PAGES = [['landing', '/'], ['report', '/company/1'], ['pricing', '/pricing'], ['models', '/models'], ['login', '/login'], ['compare', '/compare']]
+const AAPL = process.env.E2E_AAPL_ID || '1'
+const PAGES = [['landing', '/'], ['report', `/company/${AAPL}`], ['pricing', '/pricing'], ['models', '/models'], ['login', '/login'], ['compare', '/compare']]
 
 for (const theme of ['dark', 'light']) {
   for (const [name, path] of PAGES) {

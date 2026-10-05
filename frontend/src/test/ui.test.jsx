@@ -10,7 +10,7 @@ import { AuthProvider } from '../context/AuthContext'
 import { ThemeProvider } from '../context/ThemeContext'
 import Landing from '../pages/Landing'
 import { Pricing } from '../pages/Platform'
-import { humanize } from '../utils/format'
+import { fmtDate, humanize } from '../utils/format'
 
 globalThis.ResizeObserver ??= class { observe() {} unobserve() {} disconnect() {} }
 
@@ -107,7 +107,7 @@ describe('landing page', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('See the health of any listed company')
     expect((await screen.findAllByText('Apple Inc.')).length).toBeGreaterThan(0)
     expect(screen.getByText('Bed Bath & Beyond Inc.')).toBeInTheDocument()
-    expect(screen.getByText('as of 31 Jan 2023', { exact: false })).toBeInTheDocument()
+    expect(screen.getByText(`as of ${fmtDate('2023-01-31')}`, { exact: false })).toBeInTheDocument()  // locale-independent
     expect(await screen.findByText('0.103')).toBeInTheDocument()  // champion metric from the model card
   })
 })

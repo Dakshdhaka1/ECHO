@@ -4,6 +4,7 @@ import { defineConfig } from '@playwright/test'
 // E2E_BASE_URL defaults to the compose frontend; PW_CHANNEL=msedge reuses an installed browser locally.
 export default defineConfig({
   testDir: 'e2e',
+  globalSetup: './e2e/global-setup.js',
   outputDir: 'e2e/.results',
   timeout: 60_000,
   retries: process.env.CI ? 1 : 0,
