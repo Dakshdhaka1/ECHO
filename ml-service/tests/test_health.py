@@ -31,3 +31,14 @@ def test_health_lists_exported_model_cards(tmp_path):
     body = _client(Settings(model_dir=tmp_path)).get("/health").json()
 
     assert body["models"] == [{"name": "news_sentiment", "version": "1"}]
+
+
+def test_secrets_guard_blocks_placeholder_token_outside_demo_mode():
+    import pytest
+
+    from app.core.config import Settings, check_secrets
+
+    with pytest.raises(RuntimeError):
+        check_secrets(Settings(demo_mode=False, admin_token="change_me_admin_token"))
+    check_secrets(Settings(demo_mode=False, admin_token="a-real-random-token"))
+    check_secrets(Settings(demo_mode=True, admin_token="change_me_admin_token"))  # demo: warning only

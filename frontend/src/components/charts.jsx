@@ -42,7 +42,7 @@ const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI']
 const pillarTag = (score) => (score >= 70 ? ['Strong', 'var(--good)'] : score >= 55 ? ['Stable', 'var(--good)'] : score >= 40 ? ['Watch', 'var(--warning)'] : score >= 25 ? ['Weak', 'var(--serious)'] : ['Critical', 'var(--critical)'])
 
 /** Pillar cards (Stitch "sub-pillar breakdown"): one series, one colour; unavailable pillars are listed, never drawn as 0. */
-export function PillarBars({ pillars }) {
+export function PillarBars({ pillars, context = {} }) {
   return (
     <ul className="stagger grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
       {pillars.map((p, i) => {
@@ -55,7 +55,13 @@ export function PillarBars({ pillars }) {
                     style={{ background: `color-mix(in oklab, ${color} 16%, transparent)` }}>{tag}</span>
             </div>
             <div className="mt-3 text-[15px] font-semibold leading-snug text-ink">{p.label}</div>
-            <div className="mt-1 font-mono text-[11px] text-muted">weight {Math.round((p.effective_weight || 0) * 100)}%</div>
+            <div className="mt-1 font-mono text-[11px] text-muted">
+              weight {Math.round((p.effective_weight || 0) * 100)}%
+              {p.score != null && p.coverage != null && (
+                <> // <span className={p.coverage < 0.5 ? 'text-serious' : ''} title="Share of this pillar's evidence that is available and fresh">coverage {Math.round(p.coverage * 100)}%</span></>
+              )}
+            </div>
+            {context[p.key] && <div className="mt-0.5 font-mono text-[11px] text-muted">{context[p.key]}</div>}
             {p.score != null ? (
               <>
                 <div className="mt-auto flex items-baseline justify-between pt-5">

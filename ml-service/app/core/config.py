@@ -1,3 +1,4 @@
+import logging
 from functools import lru_cache
 from pathlib import Path
 
@@ -35,3 +36,12 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+def check_secrets(settings: Settings) -> None:
+    """Outside demo mode, refuse to start while the admin token is empty or a .env.example placeholder."""
+    weak = not settings.admin_token or "change_me" in settings.admin_token.lower()
+    if weak and not settings.demo_mode:
+        raise RuntimeError("ADMIN_TOKEN is unset or a change_me placeholder outside demo mode; set ML_ADMIN_TOKEN in .env")
+    if weak:
+        logging.getLogger(__name__).warning("Demo mode with a placeholder admin token. Never expose this deployment publicly.")

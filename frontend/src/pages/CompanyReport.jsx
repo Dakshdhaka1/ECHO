@@ -265,7 +265,7 @@ function Overview({ r, onTab }) {
           </div>
           <button onClick={() => onTab('why')} className="link font-mono text-xs">See every factor's contribution</button>
         </div>
-        <PillarBars pillars={r.pillars} />
+        <PillarBars pillars={r.pillars} context={pillarContext(r)} />
       </section>
       <Card title="Data coverage" subtitle="Where each input came from">
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
@@ -284,6 +284,19 @@ function Overview({ r, onTab }) {
       </Card>
     </div>
   )
+}
+
+/** Freshness line under each pillar card: how old and how broad the evidence behind the score is. */
+function pillarContext(r) {
+  const src = Object.fromEntries(r.sources.map((s) => [s.source, s]))
+  const dataTo = (key) => (src[key]?.data_as_of ? `data to ${fmtDate(src[key].data_as_of)}` : null)
+  return {
+    financial: dataTo('sec_xbrl'),
+    market: dataTo('prices'),
+    news: r.news?.available ? `${r.news.articles} headlines, last 90 days` : null,
+    workforce: r.employee?.available ? `reviews to ${r.employee.as_of_quarter} (historical dataset)` : null,
+    events: dataTo('sec_submissions'),
+  }
 }
 
 function Evidence({ ids, evidence }) {

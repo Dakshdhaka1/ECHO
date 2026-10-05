@@ -7,6 +7,7 @@ from fastapi import FastAPI
 
 from app import __version__
 from app.api import health, v1
+from app.core.config import check_secrets, get_settings
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
@@ -33,6 +34,7 @@ def _warm_up() -> None:
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    check_secrets(get_settings())
     v1._job_store().fail_interrupted()  # retrain jobs orphaned by a restart can never finish
     threading.Thread(target=_warm_up, daemon=True).start()
     yield
