@@ -34,3 +34,6 @@ replay_pid*.log
 backups/
 e2e/.results/
 playwright-report/
+
+# local assistant instructions (licensed prompt, not for redistribution)
+CLAUDE.md
