@@ -1,0 +1,43 @@
+{
+  "model": {
+    "accuracy": 0.6971012073666054,
+    "macro_f1": 0.6294857807076549,
+    "negative_precision": 0.5872425629290617,
+    "negative_recall": 0.7457319288049401,
+    "negative_f1": 0.6570651304208673,
+    "neutral_precision": 0.3809095002251238,
+    "neutral_recall": 0.46407021393307735,
+    "neutral_f1": 0.41839762611275966,
+    "positive_precision": 0.8753363228699551,
+    "positive_recall": 0.7589424572317263,
+    "positive_f1": 0.8129945855893378
+  },
+  "vader": {
+    "accuracy": 0.6786290546931508,
+    "macro_f1": 0.44692920056313984,
+    "negative_precision": 0.5443469785575049,
+    "negative_recall": 0.4057391936069742,
+    "negative_f1": 0.46493236212278877,
+    "neutral_precision": 0.31934731934731936,
+    "neutral_recall": 0.03757542512342293,
+    "neutral_f1": 0.06723926380368098,
+    "positive_precision": 0.7063645752646527,
+    "positive_recall": 0.9454812510800069,
+    "positive_f1": 0.8086159757629499
+  },
+  "esi_correlation": {
+    "pearson": 0.9120989364081606,
+    "spearman": 0.9014125951572525,
+    "company_quarters": 407
+  },
+  "themes": [
+    "work-life balance",
+    "workload & staffing",
+    "cons / working / don",
+    "company / good / time",
+    "think / really / moment",
+    "pay & benefits",
+    "career growth",
+    "management"
+  ]
+}

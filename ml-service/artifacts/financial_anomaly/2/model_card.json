@@ -1,0 +1,90 @@
+{
+  "name": "financial_anomaly",
+  "version": "2",
+  "kind": "ML",
+  "trained_at": "2026-10-05T01:13:32+00:00",
+  "git_sha": "uncommitted",
+  "hardware": "cpu (Intel64 Family 6 Model 183 Stepping 1, GenuineIntel)",
+  "seed": 42,
+  "primary_metric": "restatement_roc_auc",
+  "lower_is_better": false,
+  "metrics": {
+    "injected_pr_auc": 0.029055200786142363,
+    "injected_roc_auc": 0.6579767120321168,
+    "injected_recall_at_k": 0.017341040462427744,
+    "restatement_roc_auc": 0.6977242839697246,
+    "restatement_lift_at_5pct": 2.451414150376088
+  },
+  "baseline": {
+    "name": "beneish_m_baseline",
+    "metrics": {
+      "restatement_roc_auc": 0.4972810610532696,
+      "restatement_lift_at_5pct": 1.7102889421228522,
+      "injected_pr_auc": 0.06276201555366383
+    }
+  },
+  "params": {
+    "n_estimators": 400,
+    "features": [
+      "bn_dsri",
+      "bn_gmi",
+      "bn_aqi",
+      "bn_sgi",
+      "bn_depi",
+      "bn_sgai",
+      "bn_lvgi",
+      "bn_tata",
+      "revenue_yoy",
+      "d_net_margin",
+      "d_current_ratio"
+    ],
+    "preprocessing": "signed log + median impute + robust scale"
+  },
+  "data": {
+    "train_rows": 30458,
+    "test_rows": 17349,
+    "split": {
+      "train": [
+        2010,
+        2019
+      ],
+      "test": [
+        2020,
+        2024
+      ]
+    },
+    "inject_fraction": 0.02,
+    "manifest_sha256": "1890ad2fffb6d60c341ed53a213054ca88531d4cb4ce4e5bab4dffdeee9f4707"
+  },
+  "intended_use": "Flag 10-K/10-Q statements whose year-over-year changes are unusual relative to the market, as a prompt for closer reading (e.g. receivables or accruals growing much faster than revenue).",
+  "limitations": "An anomaly is not evidence of misstatement. Real restatements are rare and only weakly predictable from aggregated statements; the injection benchmark is synthetic by construction.",
+  "licences": {
+    "data": "SEC EDGAR, public domain"
+  },
+  "config": {
+    "model": "financial_anomaly",
+    "dataset": "data/processed/features/distress.parquet",
+    "split": {
+      "train": [
+        2010,
+        2019
+      ],
+      "test": [
+        2020,
+        2024
+      ]
+    },
+    "n_estimators": 400,
+    "inject_fraction": 0.02,
+    "promote": true
+  },
+  "mlflow_run_id": "c58583b75b254386ab6c7f207d9b5705",
+  "gate": {
+    "passed": true,
+    "reasons": [
+      "passed: beats baseline; card complete; smoke test ok"
+    ]
+  },
+  "mlflow_registry_version": 2,
+  "stage": "champion"
+}

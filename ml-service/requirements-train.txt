@@ -1,0 +1,12 @@
+# Offline training, evaluation and MLOps. Install on top of requirements.txt.
+-r requirements.txt
+mlflow>=2.16
+optuna>=4.0
+shap>=0.46
+matplotlib>=3.9
+vaderSentiment>=3.3
+transformers>=4.45
+onnx>=1.16
+# torch CPU wheels: pip install torch --index-url https://download.pytorch.org/whl/cpu
+pytest>=8
+ruff>=0.6

@@ -1,0 +1,18 @@
+model: distress
+dataset: data/processed/features/distress.parquet
+split:            # by 10-K filed year (ML_PIPELINE §3); labels need 12 months of future data
+  train: [2010, 2019]
+  validation: [2020, 2021]
+  test: [2022, 2024]
+winsorize: [0.01, 0.99]
+optuna_trials: 30
+candidates: [logistic_regression, random_forest, xgboost, lightgbm]
+feature_groups:   # for the ablation table
+  profitability: [net_margin, roa, ebit_assets, gross_margin]
+  liquidity_solvency: [current_ratio, cash_assets, debt_equity, liabilities_assets, interest_coverage, negative_equity, wc_ta, be_tl]
+  cash_flow: [ocf_liabilities, fcf_margin, neg_fcf_quarters]
+  growth_trend: [revenue_yoy, d_net_margin, d_current_ratio, revenue_slope_8q]
+  classic_scores: [re_ta, altman_z2, ohlson_o, piotroski_f, beneish_m]
+  events: [ev_restatement, ev_auditor_change, ev_exec_departure, ev_restructuring, ev_impairment, ev_delisting_notice, ev_debt_acceleration, ev_late_filing, ev_cyber_incident, filing_lag_days]
+  market_size: [log_assets, float_liabilities]
+gate_margin: 0.005

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/echo.svg?v=2" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090a0d" />
+    <meta name="description" content="ECHO - explainable corporate health intelligence from public filings, news and ML." />
+    <title>ECHO - Corporate Health Observatory</title>
+    <script>
+      // apply the saved theme before first paint (no flash)
+      try {
+        const t = localStorage.getItem('echo-theme')
+        if (t !== 'light') document.documentElement.classList.add('dark') // dark terminal theme is the default
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

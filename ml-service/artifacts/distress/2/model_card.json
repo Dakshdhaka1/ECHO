@@ -1,0 +1,223 @@
+{
+  "name": "distress",
+  "version": "2",
+  "kind": "ML",
+  "trained_at": "2026-10-05T00:58:59+00:00",
+  "git_sha": "uncommitted",
+  "hardware": "cpu (Intel64 Family 6 Model 183 Stepping 1, GenuineIntel)",
+  "seed": 42,
+  "primary_metric": "pr_auc",
+  "lower_is_better": false,
+  "metrics": {
+    "roc_auc": 0.8823490131996294,
+    "pr_auc": 0.12289890210356155,
+    "brier": 0.01115634432749173,
+    "precision": 0.23728813559322035,
+    "recall": 0.0880503144654088,
+    "f1": 0.12844036697247707,
+    "threshold": 0.15332299919167447,
+    "tp": 14.0,
+    "fp": 45.0,
+    "tn": 13141.0,
+    "fn": 145.0,
+    "positives": 159.0,
+    "n": 13345.0,
+    "brier_isotonic": 0.01124628766673803,
+    "brier_raw": 0.016149205537377923
+  },
+  "baseline": {
+    "name": "altman_z2_baseline",
+    "metrics": {
+      "roc_auc": 0.7543869188495135,
+      "pr_auc": 0.023789866537467317
+    }
+  },
+  "params": {
+    "algorithm": "lightgbm",
+    "threshold": 0.15332299919167447,
+    "hyperparameters": {
+      "n_estimators": 300,
+      "learning_rate": 0.021619899411437382,
+      "num_leaves": 9,
+      "min_child_samples": 188,
+      "subsample": 0.8712143934084402,
+      "colsample_bytree": 0.5143461805410204,
+      "reg_lambda": 0.1788730350508754,
+      "scale_pos_weight": 5.574191328147499
+    },
+    "features": [
+      "log_assets",
+      "net_margin",
+      "roa",
+      "ebit_assets",
+      "gross_margin",
+      "current_ratio",
+      "cash_assets",
+      "debt_equity",
+      "liabilities_assets",
+      "interest_coverage",
+      "negative_equity",
+      "ocf_liabilities",
+      "fcf_margin",
+      "neg_fcf_quarters",
+      "revenue_yoy",
+      "d_net_margin",
+      "d_current_ratio",
+      "revenue_slope_8q",
+      "wc_ta",
+      "re_ta",
+      "be_tl",
+      "altman_z2",
+      "ohlson_o",
+      "piotroski_f",
+      "beneish_m",
+      "float_liabilities",
+      "filing_lag_days",
+      "ev_restatement",
+      "ev_auditor_change",
+      "ev_exec_departure",
+      "ev_restructuring",
+      "ev_impairment",
+      "ev_delisting_notice",
+      "ev_debt_acceleration",
+      "ev_late_filing",
+      "ev_cyber_incident"
+    ],
+    "calibration": "Platt (sigmoid) on validation"
+  },
+  "data": {
+    "rows": {
+      "train": 40667,
+      "validation": 8425,
+      "test": 13345
+    },
+    "positives": {
+      "train": 338,
+      "validation": 56,
+      "test": 159
+    },
+    "split": {
+      "train": [
+        2010,
+        2019
+      ],
+      "validation": [
+        2020,
+        2021
+      ],
+      "test": [
+        2022,
+        2024
+      ]
+    },
+    "source": "SEC companyfacts.zip + submissions.zip (8-K Item 1.03 labels)",
+    "manifest_sha256": "43ee44e52d5dd346a9dbbe3aa2a0d3ca66558f6aca7d9f7c62596dc8d118a0f7",
+    "metrics_ci90": {
+      "pr_auc": [
+        0.0939114233497782,
+        0.1608469734536778
+      ],
+      "roc_auc": [
+        0.8605220707687875,
+        0.9043268685007064
+      ]
+    }
+  },
+  "intended_use": "Estimated probability that a US-listed non-financial company files for bankruptcy (8-K Item 1.03) within 12 months, from point-in-time public accounting data and SEC events.",
+  "limitations": "Accounting + SEC-event features only (no market prices for delisted companies). Rare-event model: probabilities are calibrated on 2020-2021 and can drift with the credit cycle. Bankruptcies of companies that stopped filing before the event are not captured. Not investment advice.",
+  "licences": {
+    "data": "SEC EDGAR, public domain"
+  },
+  "config": {
+    "model": "distress",
+    "dataset": "data/processed/features/distress.parquet",
+    "split": {
+      "train": [
+        2010,
+        2019
+      ],
+      "validation": [
+        2020,
+        2021
+      ],
+      "test": [
+        2022,
+        2024
+      ]
+    },
+    "winsorize": [
+      0.01,
+      0.99
+    ],
+    "optuna_trials": 30,
+    "candidates": [
+      "logistic_regression",
+      "random_forest",
+      "xgboost",
+      "lightgbm"
+    ],
+    "feature_groups": {
+      "profitability": [
+        "net_margin",
+        "roa",
+        "ebit_assets",
+        "gross_margin"
+      ],
+      "liquidity_solvency": [
+        "current_ratio",
+        "cash_assets",
+        "debt_equity",
+        "liabilities_assets",
+        "interest_coverage",
+        "negative_equity",
+        "wc_ta",
+        "be_tl"
+      ],
+      "cash_flow": [
+        "ocf_liabilities",
+        "fcf_margin",
+        "neg_fcf_quarters"
+      ],
+      "growth_trend": [
+        "revenue_yoy",
+        "d_net_margin",
+        "d_current_ratio",
+        "revenue_slope_8q"
+      ],
+      "classic_scores": [
+        "re_ta",
+        "altman_z2",
+        "ohlson_o",
+        "piotroski_f",
+        "beneish_m"
+      ],
+      "events": [
+        "ev_restatement",
+        "ev_auditor_change",
+        "ev_exec_departure",
+        "ev_restructuring",
+        "ev_impairment",
+        "ev_delisting_notice",
+        "ev_debt_acceleration",
+        "ev_late_filing",
+        "ev_cyber_incident",
+        "filing_lag_days"
+      ],
+      "market_size": [
+        "log_assets",
+        "float_liabilities"
+      ]
+    },
+    "gate_margin": 0.005,
+    "promote": true
+  },
+  "mlflow_run_id": "82e50b2077fa4ead9a418e7d5689e9e1",
+  "gate": {
+    "passed": true,
+    "reasons": [
+      "passed: beats baseline and champion; card complete; smoke test ok"
+    ]
+  },
+  "mlflow_registry_version": 1,
+  "stage": "champion"
+}

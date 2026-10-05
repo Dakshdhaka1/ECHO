@@ -1,0 +1,30 @@
+{
+  "restatements": {
+    "isolation_forest": {
+      "roc_auc": 0.6977242839697246,
+      "pr_auc": 0.04110281155659962,
+      "precision_at_5pct": 0.049596309111880045,
+      "lift_at_5pct": 2.451414150376088
+    },
+    "beneish_m_baseline": {
+      "roc_auc": 0.4972810610532696,
+      "pr_auc": 0.021974249049134854,
+      "precision_at_5pct": 0.03460207612456748,
+      "lift_at_5pct": 1.7102889421228522
+    },
+    "base_rate": 0.020231713643437663,
+    "positives": 351
+  },
+  "injection": {
+    "isolation_forest": {
+      "roc_auc": 0.6579767120321168,
+      "pr_auc": 0.029055200786142363,
+      "recall_at_k": 0.017341040462427744
+    },
+    "beneish_m_baseline": {
+      "roc_auc": 0.7970211989111747,
+      "pr_auc": 0.06276201555366383,
+      "recall_at_k": 0.03468208092485549
+    }
+  }
+}

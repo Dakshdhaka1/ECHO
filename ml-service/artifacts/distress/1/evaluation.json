@@ -1,0 +1,138 @@
+{
+  "validation": {
+    "logistic_regression": {
+      "pr_auc": 0.050480241519171146,
+      "roc_auc": 0.8441868801529454
+    },
+    "random_forest": {
+      "pr_auc": 0.09737464267426826,
+      "roc_auc": 0.876487206186095
+    },
+    "xgboost": {
+      "pr_auc": 0.11960980148576691,
+      "roc_auc": 0.8929787651707833
+    },
+    "lightgbm": {
+      "pr_auc": 0.136102627952047,
+      "roc_auc": 0.889462386699213
+    }
+  },
+  "test_comparison": {
+    "logistic_regression": {
+      "roc_auc": 0.8239971496355483,
+      "pr_auc": 0.06278709471448242
+    },
+    "random_forest": {
+      "roc_auc": 0.8860796232329504,
+      "pr_auc": 0.09872919739893317
+    },
+    "xgboost": {
+      "roc_auc": 0.8751591882757298,
+      "pr_auc": 0.10339083766028172
+    },
+    "lightgbm": {
+      "roc_auc": 0.8823490131996294,
+      "pr_auc": 0.12289890210356155
+    },
+    "altman_z2_baseline": {
+      "roc_auc": 0.7543869188495135,
+      "pr_auc": 0.023789866537467317
+    },
+    "ohlson_o_baseline": {
+      "roc_auc": 0.7451079713856986,
+      "pr_auc": 0.022348561972568064
+    }
+  },
+  "ablation_drop_group": {
+    "profitability": {
+      "val_pr_auc": 0.1328965173434403,
+      "test_pr_auc": 0.10653909649595014
+    },
+    "liquidity_solvency": {
+      "val_pr_auc": 0.158494730051234,
+      "test_pr_auc": 0.12969012973917626
+    },
+    "cash_flow": {
+      "val_pr_auc": 0.12624845573233673,
+      "test_pr_auc": 0.1130286857054312
+    },
+    "growth_trend": {
+      "val_pr_auc": 0.12691501786214981,
+      "test_pr_auc": 0.11666171165852234
+    },
+    "classic_scores": {
+      "val_pr_auc": 0.12689784106542698,
+      "test_pr_auc": 0.11174911865700454
+    },
+    "events": {
+      "val_pr_auc": 0.12023257241403337,
+      "test_pr_auc": 0.11118698979166153
+    },
+    "market_size": {
+      "val_pr_auc": 0.10366779598104967,
+      "test_pr_auc": 0.09932989313148177
+    }
+  },
+  "shap_mean_abs": {
+    "log_assets": 0.35254,
+    "ohlson_o": 0.34478,
+    "roa": 0.34321,
+    "float_liabilities": 0.34033,
+    "interest_coverage": 0.24406,
+    "ebit_assets": 0.22321,
+    "liabilities_assets": 0.17054,
+    "filing_lag_days": 0.14281,
+    "current_ratio": 0.13421,
+    "cash_assets": 0.12066,
+    "ev_exec_departure": 0.11584,
+    "be_tl": 0.10825,
+    "fcf_margin": 0.10575,
+    "wc_ta": 0.1008,
+    "revenue_slope_8q": 0.09248,
+    "ocf_liabilities": 0.07982,
+    "ev_late_filing": 0.07338,
+    "altman_z2": 0.07243,
+    "d_net_margin": 0.06635,
+    "ev_delisting_notice": 0.05855,
+    "debt_equity": 0.05499,
+    "d_current_ratio": 0.04566,
+    "re_ta": 0.03759,
+    "net_margin": 0.03713,
+    "revenue_yoy": 0.03505,
+    "gross_margin": 0.03054,
+    "beneish_m": 0.0228,
+    "ev_auditor_change": 0.0126,
+    "neg_fcf_quarters": 0.00931,
+    "piotroski_f": 0.00909,
+    "ev_debt_acceleration": 0.00872,
+    "ev_restructuring": 0.00725,
+    "negative_equity": 0.0049,
+    "ev_impairment": 0.0023,
+    "ev_restatement": 0.00214,
+    "ev_cyber_incident": 0.0
+  },
+  "risk_bands_test": {
+    "counts": {
+      "LOW": 12207,
+      "MODERATE": 664,
+      "HIGH": 257,
+      "ELEVATED": 217
+    },
+    "observed_rate": {
+      "LOW": 0.005324813631522897,
+      "MODERATE": 0.058734939759036146,
+      "HIGH": 0.12062256809338522,
+      "ELEVATED": 0.11059907834101383
+    }
+  },
+  "optuna_best_params": {
+    "n_estimators": 300,
+    "learning_rate": 0.021619899411437382,
+    "num_leaves": 9,
+    "min_child_samples": 188,
+    "subsample": 0.8712143934084402,
+    "colsample_bytree": 0.5143461805410204,
+    "reg_lambda": 0.1788730350508754,
+    "scale_pos_weight": 5.574191328147499
+  }
+}

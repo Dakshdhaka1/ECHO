@@ -1,0 +1,66 @@
+{
+  "name": "market_anomaly",
+  "version": "2",
+  "kind": "ML",
+  "trained_at": "2026-10-05T01:14:13+00:00",
+  "git_sha": "unknown",
+  "hardware": "cpu (Intel64 Family 6 Model 183 Stepping 1, GenuineIntel)",
+  "seed": 42,
+  "primary_metric": "injected_pr_auc",
+  "lower_is_better": false,
+  "metrics": {
+    "injected_pr_auc": 0.40578141231870646,
+    "injected_roc_auc": 0.9791328737496621,
+    "injected_recall_at_k": 0.2916666666666667
+  },
+  "baseline": {
+    "name": "max_abs_z_baseline",
+    "metrics": {
+      "injected_pr_auc": 0.9744623655913978
+    }
+  },
+  "params": {
+    "n_estimators": 300,
+    "features": [
+      "ret_z",
+      "abs_ret_z",
+      "volume_z",
+      "range_z",
+      "gap_z"
+    ],
+    "window_days": 60
+  },
+  "data": {
+    "tickers": [
+      "IBM"
+    ],
+    "train_days": 4007,
+    "test_days": 2703,
+    "split_year": 2015,
+    "inject_fraction": 0.01,
+    "background_days": 2490,
+    "excluded_extreme_days": 213
+  },
+  "intended_use": "Flag trading days whose return/volume/range/gap pattern is unusual for the stock's own recent history (robust z-scores), shown as anomaly alerts on the Market tab.",
+  "limitations": "Trained on the price histories available without a paid licence (IBM via the Alpha Vantage demo key plus locally recorded tickers). News-volume and sentiment anomalies use separate statistical rules because no long news history is available for training.",
+  "licences": {
+    "data": "Alpha Vantage free API (not redistributed; recorded locally only, licence L1)"
+  },
+  "config": {
+    "model": "market_anomaly",
+    "split_year": 2015,
+    "n_estimators": 300,
+    "inject_fraction": 0.01,
+    "background_max_z": 4.0,
+    "promote": true
+  },
+  "mlflow_run_id": "7a61d2c449914fe7b53eb35029943bed",
+  "gate": {
+    "passed": false,
+    "reasons": [
+      "injected_pr_auc=0.4058 does not beat baseline max_abs_z_baseline (0.9745)"
+    ]
+  },
+  "mlflow_registry_version": 2,
+  "stage": "challenger"
+}

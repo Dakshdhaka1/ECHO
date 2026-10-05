@@ -1,0 +1,40 @@
+# Kaggle "Glassdoor Job Reviews" firm names -> SEC CIK (used by app/adapters/reviews.py and M3).
+# Only employers that file US-GAAP statements with the SEC are mapped; CIKs were resolved from SEC's
+# company_tickers.json on 2026-10-05. Brand-to-parent mappings are deliberate: Google -> Alphabet,
+# Facebook -> Meta, Pizza-Hut -> Yum! Brands, Booking-com -> Booking Holdings, Doubletree -> Hilton.
+# Not mapped: foreign IFRS filers (e.g. HSBC, GSK, Vodafone), private firms, public bodies, and
+# BNY-Mellon (ticker did not resolve).
+firms:
+  320193: ["Apple"]   # AAPL - Apple Inc.
+  1467373: ["Accenture"]   # ACN - Accenture plc
+  315293: ["Aon"]   # AON - Aon plc
+  4962: ["American-Express"]   # AXP - AMERICAN EXPRESS CO
+  1075531: ["Booking-com"]   # BKNG - Booking Holdings Inc.
+  831001: ["Citi"]   # C - CITIGROUP INC
+  1138118: ["CBRE"]   # CBRE - CBRE GROUP, INC.
+  1108524: ["Salesforce"]   # CRM - Salesforce, Inc.
+  858877: ["Cisco-Systems"]   # CSCO - CISCO SYSTEMS, INC.
+  1628369: ["Cushman-and-Wakefield"]   # CWK - Cushman & Wakefield Ltd.
+  1773383: ["Dynatrace"]   # DT - Dynatrace, Inc.
+  1652044: ["Google"]   # GOOGL - Alphabet Inc.
+  886982: ["Goldman-Sachs"]   # GS - GOLDMAN SACHS GROUP INC
+  1468174: ["Hyatt"]   # H - Hyatt Hotels Corp
+  1585689: ["Hilton", "Doubletree-By-Hilton"]   # HLT - Hilton Worldwide Holdings Inc.
+  51143: ["IBM"]   # IBM - INTERNATIONAL BUSINESS MACHINES CORP
+  1020569: ["Iron-Mountain-Inc"]   # IRM - IRON MOUNTAIN INC
+  19617: ["J-P-Morgan"]   # JPM - JPMORGAN CHASE & CO
+  56679: ["Korn-Ferry"]   # KFY - KORN FERRY
+  1404912: ["KKR"]   # KKR - KKR & Co. Inc.
+  1141391: ["Mastercard"]   # MA - Mastercard Inc
+  871763: ["Manpower"]   # MAN - ManpowerGroup Inc.
+  1048286: ["Marriott-International"]   # MAR - MARRIOTT INTERNATIONAL INC /MD/
+  63908: ["McDonald-s"]   # MCD - MCDONALDS CORP
+  1326801: ["Facebook"]   # META - Meta Platforms, Inc.
+  895421: ["Morgan-Stanley"]   # MS - MORGAN STANLEY
+  789019: ["Microsoft"]   # MSFT - MICROSOFT CORP
+  1341439: ["Oracle"]   # ORCL - ORACLE CORP
+  1810806: ["Unity-Technologies"]   # U - Unity Software Inc.
+  1327811: ["Workday"]   # WDAY - Workday, Inc.
+  1140536: ["Willis-Towers-Watson"]   # WTW - WILLIS TOWERS WATSON PLC
+  1166003: ["XPO-Logistics"]   # XPO - XPO, Inc.
+  1041061: ["Pizza-Hut"]   # YUM - YUM BRANDS INC

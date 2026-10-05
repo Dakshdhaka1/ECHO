@@ -1,0 +1,28 @@
+# SEC Form 8-K item codes -> ECHO canonical events (DATA_STRATEGY.md §2, SCORING.md §2.1).
+# penalty: points subtracted from the Events pillar (decayed by exp(-age_days / 180)).
+# cap: optional ceiling applied to the overall health score while the event is recent (<= 365 days).
+# Items not listed here are informational (e.g. 2.02 results, 7.01 Reg FD, 9.01 exhibits).
+items:
+  "1.01": {event: MATERIAL_AGREEMENT, label: "Entry into a material definitive agreement", penalty: 0, severity: LOW}
+  "1.02": {event: AGREEMENT_TERMINATED, label: "Termination of a material definitive agreement", penalty: 5, severity: LOW}
+  "1.03": {event: BANKRUPTCY, label: "Bankruptcy or receivership", penalty: 100, severity: CRITICAL, cap: 10}
+  "1.05": {event: CYBER_INCIDENT, label: "Material cybersecurity incident", penalty: 15, severity: MEDIUM}
+  "2.01": {event: M_AND_A, label: "Completion of acquisition or disposition of assets", penalty: 0, severity: LOW}
+  "2.04": {event: DEBT_ACCELERATION, label: "Triggering events that accelerate a financial obligation", penalty: 30, severity: HIGH}
+  "2.05": {event: RESTRUCTURING, label: "Costs associated with exit or disposal activities", penalty: 15, severity: MEDIUM}
+  "2.06": {event: IMPAIRMENT, label: "Material impairments", penalty: 15, severity: MEDIUM}
+  "3.01": {event: DELISTING_NOTICE, label: "Notice of delisting or failure to satisfy a listing rule", penalty: 35, severity: HIGH}
+  "4.01": {event: AUDITOR_CHANGE, label: "Changes in registrant's certifying accountant", penalty: 15, severity: MEDIUM}
+  "4.02": {event: RESTATEMENT, label: "Non-reliance on previously issued financial statements", penalty: 40, severity: HIGH}
+  "5.01": {event: CONTROL_CHANGE, label: "Changes in control of registrant", penalty: 0, severity: LOW}
+  "5.02": {event: EXEC_DEPARTURE, label: "Departure/appointment of directors or certain officers", penalty: 5, severity: LOW}
+
+# Filing forms that are themselves events (not 8-K items).
+forms:
+  "NT 10-K": {event: LATE_FILING, label: "Notification of late filing (annual report)", penalty: 20, severity: HIGH}
+  "NT 10-Q": {event: LATE_FILING, label: "Notification of late filing (quarterly report)", penalty: 10, severity: MEDIUM}
+  # 25-NSE is also filed whenever a debt security (e.g. matured notes) is removed from listing, so on its own it is
+  # informational; the distress signal is 8-K Item 3.01 (delisting notice / listing-rule failure).
+  "25-NSE": {event: SECURITY_REMOVED, label: "Exchange removal of a listed security (equity or debt)", penalty: 0, severity: LOW}
+  "15-12B": {event: DEREGISTRATION, label: "Termination of registration", penalty: 0, severity: LOW}
+  "15-12G": {event: DEREGISTRATION, label: "Termination of registration", penalty: 0, severity: LOW}

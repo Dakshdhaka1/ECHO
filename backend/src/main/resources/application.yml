@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: echo-backend
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:echo}
+    username: ${POSTGRES_USER:echo}
+    password: ${POSTGRES_PASSWORD:change_me}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate  # schema is owned by Flyway migrations
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2s
+  cache:
+    type: ${CACHE_TYPE:redis}
+    redis:
+      time-to-live: 10m
+  threads:
+    virtual:
+      enabled: false
+
+server:
+  port: ${BACKEND_PORT:8080}
+  forward-headers-strategy: framework
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: when-authorized
+  health:
+    redis:
+      enabled: true
+
+springdoc:
+  api-docs:
+    path: /api/docs
+  swagger-ui:
+    path: /api/swagger-ui
+    operations-sorter: alpha
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%X{requestId:-}] %logger{36} - %msg%n"
+
+echo:
+  ml-service-url: ${ML_SERVICE_URL:http://localhost:8000}
+  demo-mode: ${DEMO_MODE:true}
+  ml-admin-token: ${ML_ADMIN_TOKEN:change_me_admin_token}
+  admin-emails: ${ADMIN_EMAILS:admin@echo.local}
+  cors-allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:4173,http://localhost:3000}
+  jwt:
+    secret: ${JWT_SECRET:change_me_to_a_long_random_string_of_at_least_32_bytes}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
+    issuer: echo
+  analysis:
+    report-ttl-hours: ${REPORT_TTL_HOURS:24}
+    executor-threads: 4
+    ml-timeout-seconds: 240
+  scheduler:
+    enabled: ${SCHEDULER_ENABLED:true}
+    watchlist-refresh-cron: "0 0 6 * * *"     # daily 06:00: re-analyse every watched company
+    monitoring-cron: "0 0 5 * * MON"          # weekly drift / freshness report
+    retrain-cron: "0 0 3 1 * *"               # monthly scheduled retraining of all models
+    auto-retrain-on-drift: ${AUTO_RETRAIN_ON_DRIFT:true}
+  billing:
+    mode: ${BILLING_MODE:demo}
+  rate-limit:
+    anonymous-analyses-per-hour: 20

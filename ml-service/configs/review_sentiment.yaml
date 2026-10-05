@@ -1,0 +1,4 @@
+model: review_sentiment
+max_reviews: 150000
+C_grid: [0.5, 1, 2, 4]
+themes: 8

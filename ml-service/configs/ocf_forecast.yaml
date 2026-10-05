@@ -1,0 +1,9 @@
+model: ocf_forecast
+item: OperatingCashFlow
+max_series: 4000
+workers: 16
+train_end: "2022-12-31"
+calib_end: "2023-12-31"
+test_end: "2025-06-30"
+n_estimators: 600
+ets_sample_origins: 1500

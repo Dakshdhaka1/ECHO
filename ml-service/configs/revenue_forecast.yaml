@@ -1,0 +1,9 @@
+model: revenue_forecast
+item: Revenue
+max_series: 4000
+workers: 16
+train_end: "2022-12-31"   # targets up to here train the model
+calib_end: "2023-12-31"   # targets in 2023 calibrate the conformal intervals
+test_end: "2025-06-30"    # targets in 2024-H1 2025 are the test set (origins <= calib_end)
+n_estimators: 600
+ets_sample_origins: 1500

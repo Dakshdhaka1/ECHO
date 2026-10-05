@@ -1,0 +1,22 @@
+model: news_sentiment
+data:
+  train: twitter-financial-news-sentiment (sent_train.csv), 90% for training
+  validation: 10% stratified hold-out of sent_train.csv (model selection, early stopping)
+  test_in_domain: twitter-financial-news-sentiment sent_valid.csv (never used for training/selection)
+  test_primary: Financial PhraseBank v1.0 Sentences_AllAgree (evaluation only, non-commercial licence)
+tfidf:
+  C_grid: [0.5, 1, 2, 4, 8]
+transformer:
+  enabled: true
+  base_model: distilroberta-base
+  max_length: 64
+  batch_size: 32
+  epochs: 3
+  learning_rate: 3.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  threads: 16
+finbert_baseline:
+  enabled: true
+  model: ProsusAI/finbert
+gate_margin: 0.005

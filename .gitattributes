@@ -1,0 +1,7 @@
+# Normalise text to LF (Docker images and shell scripts need LF even when checked out on Windows)
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.woff2 binary
+ml-service/artifacts/**/*.onnx filter=lfs diff=lfs merge=lfs -text
+ml-service/artifacts/**/*.joblib filter=lfs diff=lfs merge=lfs -text

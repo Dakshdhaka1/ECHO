@@ -1,0 +1,107 @@
+# ECHO full stack. From the repository root:
+#   cp .env.example .env            (then edit it; keys are optional - defaults run demo mode)
+#   docker compose --env-file .env -f infra/docker/docker-compose.yml up --build
+# (--env-file is needed because Compose otherwise looks for .env next to this file, not in the repo root)
+# Then open http://localhost:5173  (API docs: http://localhost:8080/api/swagger-ui, MLflow: http://localhost:5000)
+name: echo
+
+x-env: &common-env
+  DEMO_MODE: ${DEMO_MODE:-true}
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: ${POSTGRES_DB:-echo}
+  POSTGRES_USER: ${POSTGRES_USER:-echo}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-echo}
+      POSTGRES_USER: ${POSTGRES_USER:-echo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-echo} -d ${POSTGRES_DB:-echo}"]
+      interval: 5s
+      retries: 20
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v3.16.1
+    command: >
+      mlflow server --host 0.0.0.0 --port 5000
+      --backend-store-uri sqlite:////mlruns/mlflow-docker.db
+      --artifacts-destination /mlruns/artifacts --serve-artifacts
+      --allowed-hosts "*"
+    volumes:
+      - ../../ml-service/mlruns:/mlruns
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+  ml-service:
+    build:
+      context: ../../ml-service
+      args:
+        INSTALL_TRAINING: ${ML_INSTALL_TRAINING:-true}
+    environment:
+      <<: *common-env
+      MODEL_DIR: /app/artifacts
+      DATA_DIR: /data
+      ECHO_DATA_DIR: /data
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      EXPLANATION_PROVIDER: ${EXPLANATION_PROVIDER:-template}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ALPHA_VANTAGE_API_KEY: ${ALPHA_VANTAGE_API_KEY:-}
+      SEC_USER_AGENT: ${SEC_USER_AGENT:-}
+      ADMIN_TOKEN: ${ML_ADMIN_TOKEN:-change_me_admin_token}
+    volumes:
+      - ../../ml-service/artifacts:/app/artifacts      # trained champion models + model cards + monitoring
+      - ../../ml-service/mlruns:/app/mlruns
+      - ../../data:/data                               # demo snapshot (sample/) and local raw data
+    depends_on:
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  backend:
+    build: ../../backend
+    environment:
+      <<: *common-env
+      ML_SERVICE_URL: http://ml-service:8000
+      ML_ADMIN_TOKEN: ${ML_ADMIN_TOKEN:-change_me_admin_token}
+      JWT_SECRET: ${JWT_SECRET:-change_me_to_a_long_random_string_of_at_least_32_bytes}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-60}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-admin@echo.local}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
+      BILLING_MODE: ${BILLING_MODE:-demo}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      ml-service: { condition: service_healthy }
+    restart: unless-stopped
+
+  frontend:
+    build: ../../frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      backend: { condition: service_healthy }
+    restart: unless-stopped
+
+volumes:
+  pgdata:

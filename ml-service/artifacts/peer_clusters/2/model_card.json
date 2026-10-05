@@ -1,0 +1,71 @@
+{
+  "name": "peer_clusters",
+  "version": "2",
+  "kind": "ML",
+  "trained_at": "2026-10-05T07:18:57+00:00",
+  "git_sha": "unknown",
+  "hardware": "cpu (x86_64)",
+  "seed": 42,
+  "primary_metric": "silhouette",
+  "lower_is_better": false,
+  "metrics": {
+    "silhouette": 0.2245834102107569,
+    "davies_bouldin": 1.4765500443906892,
+    "stability_ari": 0.8466487961322458,
+    "k": 4.0
+  },
+  "baseline": {
+    "name": "sector_only",
+    "metrics": {
+      "silhouette": -0.07354743805171106
+    }
+  },
+  "params": {
+    "algorithm": "kmeans",
+    "k": 4,
+    "features": [
+      "net_margin",
+      "roa",
+      "revenue_yoy",
+      "liabilities_assets",
+      "current_ratio",
+      "fcf_margin",
+      "log_assets",
+      "ocf_liabilities"
+    ],
+    "gmm_compared": true,
+    "preprocessing": "median impute + quantile-normal transform"
+  },
+  "data": {
+    "companies": 3524,
+    "year": 2024,
+    "source": "latest 10-K per company (distress dataset)",
+    "manifest_sha256": "1890ad2fffb6d60c341ed53a213054ca88531d4cb4ce4e5bab4dffdeee9f4707"
+  },
+  "intended_use": "Segment a company into Stable / Growth / Watchlist / High Risk by its financial profile, for peer context in the dashboard.",
+  "limitations": "Segments are descriptive groupings of accounting ratios, not ratings. Names are assigned by a documented rule on cluster centroids. Silhouette scores for financial ratios are modest by nature.",
+  "licences": {
+    "data": "SEC EDGAR, public domain"
+  },
+  "config": {
+    "model": "peer_clusters",
+    "dataset": "data/processed/features/distress.parquet",
+    "year": 2024,
+    "k_grid": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "promote": true
+  },
+  "mlflow_run_id": "08d6e91bf5ce47f3b0a991ade01d40d9",
+  "gate": {
+    "passed": false,
+    "reasons": [
+      "does not beat champion v1 (0.2246) by margin 0.0"
+    ]
+  },
+  "mlflow_registry_version": "1",
+  "stage": "challenger"
+}

@@ -1,0 +1,1 @@
+{"labels": ["negative", "neutral", "positive"], "max_length": 64, "format": "onnx"}

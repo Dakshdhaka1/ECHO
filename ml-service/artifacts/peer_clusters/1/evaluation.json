@@ -1,0 +1,75 @@
+{
+  "k_grid": {
+    "4": {
+      "kmeans_silhouette": 0.2245834102107569,
+      "kmeans_davies_bouldin": 1.4765500443906892,
+      "gmm_silhouette": 0.17166634921557497,
+      "gmm_bic": 50613.57484931476
+    },
+    "5": {
+      "kmeans_silhouette": 0.19064099144520205,
+      "kmeans_davies_bouldin": 1.4642765418336485,
+      "gmm_silhouette": 0.12471860035993008,
+      "gmm_bic": 48673.81421177662
+    },
+    "6": {
+      "kmeans_silhouette": 0.19329930317269947,
+      "kmeans_davies_bouldin": 1.4556143881390415,
+      "gmm_silhouette": 0.07764598931253783,
+      "gmm_bic": 47675.351680152395
+    },
+    "7": {
+      "kmeans_silhouette": 0.1907120948716767,
+      "kmeans_davies_bouldin": 1.4826040646750855,
+      "gmm_silhouette": 0.043574705631013705,
+      "gmm_bic": 47423.95198921536
+    }
+  },
+  "selected_k": 4,
+  "sector_only_silhouette": -0.07354743805171106,
+  "stability_ari": 0.8466487961322458,
+  "segment_profile": {
+    "Growth": {
+      "companies": 757,
+      "median_net_margin": -1.3213,
+      "median_revenue_yoy": 0.0635,
+      "median_liabilities_assets": 0.3243,
+      "median_current_ratio": 4.0992,
+      "distress_rate_12m": 0.0119
+    },
+    "High Risk": {
+      "companies": 553,
+      "median_net_margin": -1.7622,
+      "median_revenue_yoy": -0.0753,
+      "median_liabilities_assets": 1.3948,
+      "median_current_ratio": 0.4085,
+      "distress_rate_12m": 0.0524
+    },
+    "Stable": {
+      "companies": 760,
+      "median_net_margin": 0.1132,
+      "median_revenue_yoy": 0.0228,
+      "median_liabilities_assets": 0.3543,
+      "median_current_ratio": 2.8729,
+      "distress_rate_12m": 0.0013
+    },
+    "Watchlist": {
+      "companies": 1454,
+      "median_net_margin": 0.0255,
+      "median_revenue_yoy": 0.0402,
+      "median_liabilities_assets": 0.6655,
+      "median_current_ratio": 1.3349,
+      "distress_rate_12m": 0.0069
+    }
+  },
+  "names": {
+    "2": "High Risk",
+    "1": "Growth",
+    "3": "Stable",
+    "0": "Watchlist"
+  },
+  "pca_explained_variance": [
+    0.465,
+    0.213
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "injection": {
+    "isolation_forest": {
+      "pr_auc": 0.40578141231870646,
+      "roc_auc": 0.9791328737496621,
+      "recall_at_k": 0.2916666666666667
+    },
+    "max_abs_z_baseline": {
+      "pr_auc": 0.9744623655913978,
+      "roc_auc": 0.9993579345769127,
+      "recall_at_k": 0.9583333333333334
+    }
+  },
+  "earnings_days": {
+    "isolation_forest": {
+      "IBM": {
+        "event_days": 94,
+        "hit_rate_top5pct": 0.4574468085106383,
+        "base_rate_top5pct": 0.05,
+        "lift": 9.148936170212766
+      }
+    },
+    "max_abs_z_baseline": {
+      "IBM": {
+        "event_days": 94,
+        "hit_rate_top5pct": 0.4574468085106383,
+        "base_rate_top5pct": 0.05,
+        "lift": 9.148936170212766
+      }
+    }
+  }
+}

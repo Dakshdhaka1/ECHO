@@ -1,0 +1,32 @@
+# env / secrets
+.env
+*.local
+# Java
+backend/target/
+*.class
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+# ML outputs: models + model cards are committed; binaries (*.onnx, *.joblib) go through Git LFS (.gitattributes)
+ml-service/mlruns/*
+ml-service/artifacts/monitoring/
+*.part
+.ruff_cache/
+data/raw/*
+data/processed/*
+!**/.gitkeep
+# Node
+node_modules/
+frontend/dist/
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+hs_err_pid*.log
+replay_pid*.log

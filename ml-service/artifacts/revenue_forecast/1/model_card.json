@@ -1,0 +1,79 @@
+{
+  "name": "revenue_forecast",
+  "version": "1",
+  "kind": "ML",
+  "trained_at": "2026-10-05T01:07:25+00:00",
+  "git_sha": "uncommitted",
+  "hardware": "cpu (Intel64 Family 6 Model 183 Stepping 1, GenuineIntel)",
+  "seed": 42,
+  "primary_metric": "mase",
+  "lower_is_better": true,
+  "metrics": {
+    "mase": 4.143873633716626,
+    "smape": 0.2832162610445615,
+    "mase_ets_subset": 1.4322452771757836,
+    "interval_coverage_80": 0.8262748053252952
+  },
+  "baseline": {
+    "name": "seasonal_naive",
+    "metrics": {
+      "mase": 4.288395562290374,
+      "smape": 0.30130309640358116
+    },
+    "ets_subset_mase": 1.5436884851934767
+  },
+  "params": {
+    "item": "Revenue",
+    "n_lags": 8,
+    "horizons": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "objective": "huber",
+    "n_estimators": 600,
+    "intervals": "split conformal (10th/90th residual quantiles)"
+  },
+  "data": {
+    "series": 4000,
+    "rows": {
+      "train": 332403,
+      "calibration": 20268,
+      "test": 19905
+    },
+    "split": {
+      "train_end": "2022-12-31",
+      "calib_end": "2023-12-31",
+      "test_end": "2025-06-30"
+    },
+    "source": "SEC XBRL quarterly values (Q4 derived as FY - 9M)",
+    "manifest_sha256": "1890ad2fffb6d60c341ed53a213054ca88531d4cb4ce4e5bab4dffdeee9f4707"
+  },
+  "intended_use": "Forecast the next four quarters of Revenue with an 80% interval, as a trend indicator.",
+  "limitations": "Uses each series' latest reported values (restatements included) rather than strict as-first-reported values; structural breaks (M&A, spin-offs) are not modelled. Not guidance.",
+  "licences": {
+    "data": "SEC EDGAR, public domain"
+  },
+  "config": {
+    "model": "revenue_forecast",
+    "item": "Revenue",
+    "max_series": 4000,
+    "workers": 16,
+    "train_end": "2022-12-31",
+    "calib_end": "2023-12-31",
+    "test_end": "2025-06-30",
+    "n_estimators": 600,
+    "ets_sample_origins": 1500,
+    "promote": true
+  },
+  "mlflow_run_id": "d5d910497a5f44d68c8b8fb43ac21ae2",
+  "gate": {
+    "passed": true,
+    "reasons": [
+      "passed: beats baseline; card complete; smoke test ok"
+    ]
+  },
+  "mlflow_registry_version": 1,
+  "stage": "champion"
+}

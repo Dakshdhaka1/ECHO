@@ -1,0 +1,5 @@
+model: market_anomaly
+split_year: 2015          # fit on days up to 2015-12-31, evaluate on later days
+n_estimators: 300
+inject_fraction: 0.01
+background_max_z: 4.0   # test days whose max |robust z| exceeds this are excluded from injection negatives

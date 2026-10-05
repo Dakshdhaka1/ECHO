@@ -1,0 +1,13 @@
+{%- if health.score is none -%}
+ECHO could not compute a reliable health score for {{ company }} as of {{ as_of }}: only {{ (health.confidence * 100) | round | int }}% of the expected public data is available ({{ missing | join(", ") }} missing).
+{%- else -%}
+{{ company }} scores {{ health.score }}/100 ({{ band_text }}) as of {{ as_of }}, with {{ confidence_text }} confidence ({{ (health.confidence * 100) | round | int }}% data coverage).
+{%- if health.override %} The score is {{ health.override }}.{% endif %}
+{%- endif %}
+{%- if positives %} The main supports are {{ positives | join("; ") }}.{% endif %}
+{%- if negatives %} The main drags are {{ negatives | join("; ") }}.{% endif %}
+{%- if distress %} {{ distress }}{% endif %}
+{%- if segment %} {{ segment }}{% endif %}
+{%- if signals %} Warning signals: {{ signals | join("; ") }}.{% endif %}
+{%- if forecast %} {{ forecast }}{% endif %}
+{%- if missing and health.score is not none %} Not covered: {{ missing | join(", ") }}.{% endif %}

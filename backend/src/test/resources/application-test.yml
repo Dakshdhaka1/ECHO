@@ -1,0 +1,21 @@
+spring:
+  cache:
+    type: simple
+  data:
+    redis:
+      port: 1   # no Redis in tests: RateLimiter falls back to in-memory counters
+
+echo:
+  ml-service-url: http://localhost:1
+  admin-emails: admin@test.dev
+  jwt:
+    secret: test-secret-test-secret-test-secret-123456
+  scheduler:
+    enabled: false
+  rate-limit:
+    anonymous-analyses-per-hour: 1000
+
+management:
+  health:
+    redis:
+      enabled: false

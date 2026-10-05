@@ -1,0 +1,144 @@
+# US-GAAP / dei XBRL tags -> ECHO canonical line items (DATA_STRATEGY.md §2).
+# Tags are listed in priority order: for a given period the first tag that has a value wins.
+# kind: duration (flow over a period) | instant (balance at a date)
+items:
+  Revenue:
+    kind: duration
+    tags:
+      - us-gaap:Revenues
+      - us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax
+      - us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax
+      - us-gaap:SalesRevenueNet
+      - us-gaap:SalesRevenueGoodsNet
+      - us-gaap:SalesRevenueServicesNet
+      - us-gaap:RevenuesNetOfInterestExpense
+  CostOfRevenue:
+    kind: duration
+    tags:
+      - us-gaap:CostOfRevenue
+      - us-gaap:CostOfGoodsAndServicesSold
+      - us-gaap:CostOfGoodsSold
+      - us-gaap:CostOfServices
+  GrossProfit:
+    kind: duration
+    tags: [us-gaap:GrossProfit]
+  OperatingIncome:
+    kind: duration
+    tags: [us-gaap:OperatingIncomeLoss]
+  NetIncome:
+    kind: duration
+    tags:
+      - us-gaap:NetIncomeLoss
+      - us-gaap:ProfitLoss
+      - us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic
+  InterestExpense:
+    kind: duration
+    tags:
+      - us-gaap:InterestExpense
+      - us-gaap:InterestExpenseNonoperating
+      - us-gaap:InterestExpenseDebt
+  SGA:
+    kind: duration
+    tags: [us-gaap:SellingGeneralAndAdministrativeExpense]
+  Depreciation:
+    kind: duration
+    tags:
+      - us-gaap:DepreciationDepletionAndAmortization
+      - us-gaap:DepreciationAndAmortization
+      - us-gaap:Depreciation
+      - us-gaap:DepreciationAmortizationAndAccretionNet
+  OperatingCashFlow:
+    kind: duration
+    tags:
+      - us-gaap:NetCashProvidedByUsedInOperatingActivities
+      - us-gaap:NetCashProvidedByUsedInOperatingActivitiesContinuingOperations
+  CapEx:
+    kind: duration
+    tags:
+      - us-gaap:PaymentsToAcquirePropertyPlantAndEquipment
+      - us-gaap:PaymentsToAcquireProductiveAssets
+  TotalAssets:
+    kind: instant
+    tags: [us-gaap:Assets]
+  CurrentAssets:
+    kind: instant
+    tags: [us-gaap:AssetsCurrent]
+  CurrentLiabilities:
+    kind: instant
+    tags: [us-gaap:LiabilitiesCurrent]
+  TotalLiabilities:
+    kind: instant
+    tags: [us-gaap:Liabilities]
+  StockholdersEquity:
+    kind: instant
+    tags:
+      - us-gaap:StockholdersEquity
+      - us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest
+  LiabilitiesAndEquity:
+    kind: instant
+    tags: [us-gaap:LiabilitiesAndStockholdersEquity]
+  RetainedEarnings:
+    kind: instant
+    tags: [us-gaap:RetainedEarningsAccumulatedDeficit]
+  Cash:
+    kind: instant
+    tags:
+      - us-gaap:CashAndCashEquivalentsAtCarryingValue
+      - us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
+      - us-gaap:Cash
+  LongTermDebt:
+    kind: instant
+    tags:
+      - us-gaap:LongTermDebtNoncurrent
+      - us-gaap:LongTermDebt
+      - us-gaap:LongTermDebtAndCapitalLeaseObligations
+  Inventory:
+    kind: instant
+    tags: [us-gaap:InventoryNet]
+  Receivables:
+    kind: instant
+    tags: [us-gaap:AccountsReceivableNetCurrent]
+  PPE:
+    kind: instant
+    tags: [us-gaap:PropertyPlantAndEquipmentNet]
+  SharesOutstanding:
+    kind: instant
+    unit: shares
+    tags:
+      - dei:EntityCommonStockSharesOutstanding
+      - us-gaap:CommonStockSharesOutstanding
+  PublicFloat:
+    kind: instant
+    tags: [dei:EntityPublicFloat]
+  # Bank variant (SCORING.md §2.2)
+  Deposits:
+    kind: instant
+    tags: [us-gaap:Deposits]
+  Loans:
+    kind: instant
+    tags:
+      - us-gaap:LoansAndLeasesReceivableNetReportedAmount
+      - us-gaap:FinancingReceivableExcludingAccruedInterestAfterAllowanceForCreditLoss
+      - us-gaap:LoansAndLeasesReceivableNetOfDeferredIncome
+  HtmAmortizedCost:
+    kind: instant
+    tags:
+      - us-gaap:HeldToMaturitySecurities
+      - us-gaap:DebtSecuritiesHeldToMaturityAmortizedCostAfterAllowanceForCreditLoss
+      - us-gaap:HeldToMaturitySecuritiesAmortizedCostAfterAllowanceForCreditLoss
+  HtmFairValue:
+    kind: instant
+    tags:
+      - us-gaap:HeldToMaturitySecuritiesFairValue
+      - us-gaap:DebtSecuritiesHeldToMaturityFairValue
+  AfsAmortizedCost:
+    kind: instant
+    tags:
+      - us-gaap:AvailableForSaleDebtSecuritiesAmortizedCostBasis
+      - us-gaap:AvailableForSaleSecuritiesAmortizedCost
+      - us-gaap:AvailableForSaleSecuritiesDebtSecuritiesAmortizedCost
+  AfsFairValue:
+    kind: instant
+    tags:
+      - us-gaap:AvailableForSaleSecuritiesDebtSecurities
+      - us-gaap:AvailableForSaleSecurities

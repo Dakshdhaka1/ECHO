@@ -1,0 +1,106 @@
+{
+  "name": "news_sentiment",
+  "version": "2",
+  "kind": "ML",
+  "trained_at": "2026-10-05T02:08:57+00:00",
+  "git_sha": "uncommitted",
+  "hardware": "cpu (Intel64 Family 6 Model 183 Stepping 1, GenuineIntel)",
+  "seed": 42,
+  "primary_metric": "phrasebank_macro_f1",
+  "lower_is_better": false,
+  "metrics": {
+    "phrasebank_macro_f1": 0.8948425729019682,
+    "phrasebank_accuracy": 0.9121024734982333,
+    "twitter_test_macro_f1": 0.8476158683085634,
+    "twitter_test_accuracy": 0.8806532663316583
+  },
+  "baseline": {
+    "name": "tfidf_logreg",
+    "metrics": {
+      "phrasebank_macro_f1": 0.6786252985749881,
+      "twitter_test_macro_f1": 0.7637017808050165
+    }
+  },
+  "params": {
+    "selected": "distilroberta_finetuned",
+    "validation_macro_f1": {
+      "tfidf_logreg": 0.755874245286369,
+      "distilroberta_finetuned": 0.8294718222670374
+    },
+    "transformer": {
+      "enabled": true,
+      "base_model": "distilroberta-base",
+      "max_length": 64,
+      "batch_size": 32,
+      "epochs": 3,
+      "learning_rate": 3e-05,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.06,
+      "threads": 16
+    }
+  },
+  "data": {
+    "train": 8588,
+    "validation": 955,
+    "test_twitter": 2388,
+    "test_phrasebank": 2264,
+    "manifest_sha256": "1890ad2fffb6d60c341ed53a213054ca88531d4cb4ce4e5bab4dffdeee9f4707",
+    "splits": {
+      "train": "twitter-financial-news-sentiment (sent_train.csv), 90% for training",
+      "validation": "10% stratified hold-out of sent_train.csv (model selection, early stopping)",
+      "test_in_domain": "twitter-financial-news-sentiment sent_valid.csv (never used for training/selection)",
+      "test_primary": "Financial PhraseBank v1.0 Sentences_AllAgree (evaluation only, non-commercial licence)"
+    }
+  },
+  "intended_use": "Sentiment of English financial-news headlines about a company (negative/neutral/positive). Score = P(positive) - P(negative), aggregated over 90 days for the News pillar.",
+  "limitations": "Headline-level only; misses sarcasm and context. Trained on short financial tweets/headlines, so long or non-financial text is out of domain. English only.",
+  "licences": {
+    "train_data": "twitter-financial-news-sentiment, MIT",
+    "eval_data": "Financial PhraseBank, CC BY-NC-SA 3.0 (evaluation only)",
+    "base_model": "distilroberta-base, Apache-2.0"
+  },
+  "config": {
+    "model": "news_sentiment",
+    "data": {
+      "train": "twitter-financial-news-sentiment (sent_train.csv), 90% for training",
+      "validation": "10% stratified hold-out of sent_train.csv (model selection, early stopping)",
+      "test_in_domain": "twitter-financial-news-sentiment sent_valid.csv (never used for training/selection)",
+      "test_primary": "Financial PhraseBank v1.0 Sentences_AllAgree (evaluation only, non-commercial licence)"
+    },
+    "tfidf": {
+      "C_grid": [
+        0.5,
+        1,
+        2,
+        4,
+        8
+      ]
+    },
+    "transformer": {
+      "enabled": true,
+      "base_model": "distilroberta-base",
+      "max_length": 64,
+      "batch_size": 32,
+      "epochs": 3,
+      "learning_rate": 3e-05,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.06,
+      "threads": 16
+    },
+    "finbert_baseline": {
+      "enabled": true,
+      "model": "ProsusAI/finbert"
+    },
+    "gate_margin": 0.005,
+    "promote": true
+  },
+  "mlflow_run_id": "b3b9ce4114924e838a41d2ff5f26e20c",
+  "gate": {
+    "passed": false,
+    "reasons": [
+      "does not beat champion v1 (0.8948) by margin 0.005"
+    ]
+  },
+  "mlflow_registry_version": 2,
+  "stage": "challenger"
+}

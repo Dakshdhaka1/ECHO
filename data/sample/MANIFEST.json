@@ -1,0 +1,254 @@
+{
+  "news/1018724.json": {
+    "bytes": 118682,
+    "retrieved_at": "2026-10-05T01:49:46+00:00",
+    "sha256": "18b21ffadda9996aad4c2646b1ebb1e2e8a7ff573fbf21de6d3ddb5f25fbb41f",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/1045810.json": {
+    "bytes": 133365,
+    "retrieved_at": "2026-10-05T01:29:10+00:00",
+    "sha256": "adfeca111f15825387a04eff67fed8c202871cc05fda2eceebb5e75c748447ef",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/12927.json": {
+    "bytes": 236105,
+    "retrieved_at": "2026-10-05T02:27:46+00:00",
+    "sha256": "2f09ebd82765d6622e44f63a887eb0352241a59dafc5166050b82d32f7644a24",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/1318605.json": {
+    "bytes": 245971,
+    "retrieved_at": "2026-10-05T02:08:17+00:00",
+    "sha256": "46128bdfffafbb2d083492ede36e1fe9eaa76b95f11bdca58c98ef490e3ae3b8",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/1326801.json": {
+    "bytes": 374321,
+    "retrieved_at": "2026-10-05T01:59:16+00:00",
+    "sha256": "d86638071659a12832662528ad91ee0cb4765a8333ec9605a7a7e8ceb2b73f2e",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/1652044.json": {
+    "bytes": 142117,
+    "retrieved_at": "2026-10-05T01:38:41+00:00",
+    "sha256": "f20ff68b29778a84e3b7f6400f02d2dac7ba3ce198c777427f197d4ef3c3a20e",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/320193.json": {
+    "bytes": 238399,
+    "retrieved_at": "2026-10-05T00:53:59+00:00",
+    "sha256": "b1e242d6c38131adeeca7baa75d4f428068bc8cbd4db1d9236beed60e3419bd2",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/50863.json": {
+    "bytes": 124563,
+    "retrieved_at": "2026-10-05T02:17:08+00:00",
+    "sha256": "15c29a75793b3791a50bcde29a76f790873ffcb38963da722eece6ddc9bf263b",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "news/789019.json": {
+    "bytes": 124551,
+    "retrieved_at": "2026-10-05T01:16:20+00:00",
+    "sha256": "1757daef8b83f1710acbbd5938f670c157ffcc2025ae072bcdff9164e0aedb1c",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc"
+  },
+  "reference/peer_stats_2022-03-31.parquet": {
+    "bytes": 234674,
+    "retrieved_at": "2026-10-05T01:23:50+00:00",
+    "sha256": "6367956ee142b0f7daabb5a3a79f9496b401455e3229ee1f73957427c5b35b15",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2022-04-30.parquet": {
+    "bytes": 234459,
+    "retrieved_at": "2026-10-05T01:23:51+00:00",
+    "sha256": "8f0c1cb5ef37ebd0a55ed79722d6cd17855528301e8d84ee7e95153cc20c9fa1",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2022-09-30.parquet": {
+    "bytes": 234740,
+    "retrieved_at": "2026-10-05T01:23:51+00:00",
+    "sha256": "b2f1e226a86aa3fb794b70aee92cc84c407a7914cf4799d8e2884a7a63d43cac",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2022-10-31.parquet": {
+    "bytes": 235251,
+    "retrieved_at": "2026-10-05T01:23:51+00:00",
+    "sha256": "5e2ff0bf512a187eeb78e86f5c79222a8df07cedd0dd5a9cea08aff024d316f1",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2022-11-30.parquet": {
+    "bytes": 233675,
+    "retrieved_at": "2026-10-05T01:23:51+00:00",
+    "sha256": "0e32c8eb4136705d31212e903e961fb1e9ebc358c79978268a558b75f39c335e",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2022-12-31.parquet": {
+    "bytes": 233798,
+    "retrieved_at": "2026-10-05T01:23:52+00:00",
+    "sha256": "afc65fedb4fabec07435045737daeb4c7c11e79816d5ae776eec999354084106",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2023-01-31.parquet": {
+    "bytes": 234005,
+    "retrieved_at": "2026-10-05T01:23:52+00:00",
+    "sha256": "478215e8abbac65221a5018a069fd27cced330706f87a9c28c8c9115541a3be1",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2023-05-31.parquet": {
+    "bytes": 235074,
+    "retrieved_at": "2026-10-05T01:23:52+00:00",
+    "sha256": "3ae9752d189dcf583e97738b26613c5431994039cdd04329f5f6d3da5a75832a",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "reference/peer_stats_2026-10-05.parquet": {
+    "bytes": 233248,
+    "retrieved_at": "2026-10-05T01:23:52+00:00",
+    "sha256": "637b4983911bec84762500b719da285ac90e29bf5059fa404210edaedc72cfce",
+    "url": "derived: SEC companyfacts.zip (public domain)"
+  },
+  "sec/1018724/companyfacts.json.gz": {
+    "bytes": 301597,
+    "retrieved_at": "2026-10-05T00:43:09+00:00",
+    "sha256": "932cf3b6d8ca78652f309eaebc48d3d320634447e2113cc58324c9928d9de936",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001018724.json"
+  },
+  "sec/1018724/submissions.json.gz": {
+    "bytes": 73796,
+    "retrieved_at": "2026-10-05T00:43:09+00:00",
+    "sha256": "cfac6dd571fa15f354e85cc28b74f21cadc4b35f057393f4690fb7cf447ddf3a",
+    "url": "https://data.sec.gov/submissions/CIK0001018724.json"
+  },
+  "sec/1045810/companyfacts.json.gz": {
+    "bytes": 285803,
+    "retrieved_at": "2026-10-05T00:43:03+00:00",
+    "sha256": "d3fcfb2900994519e73544e034af7c458f6648f6e9e624613d86bad95b4fdc21",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json"
+  },
+  "sec/1045810/submissions.json.gz": {
+    "bytes": 66064,
+    "retrieved_at": "2026-10-05T00:43:03+00:00",
+    "sha256": "070cf487671574fb7f8127f03dec30df6f143e6e94587e53335213e440007bce",
+    "url": "https://data.sec.gov/submissions/CIK0001045810.json"
+  },
+  "sec/12927/companyfacts.json.gz": {
+    "bytes": 339345,
+    "retrieved_at": "2026-10-05T00:43:23+00:00",
+    "sha256": "5042dca78d1388bcf7725da9bbb545e4e49e1b9ca6aab03fbc0abd4f839a3733",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000012927.json"
+  },
+  "sec/12927/submissions.json.gz": {
+    "bytes": 80048,
+    "retrieved_at": "2026-10-05T00:43:23+00:00",
+    "sha256": "ef4e9d45c10a6ea0d300d0a6aa0d9b5fb0b44b34e137cdc5231c2cd80048641c",
+    "url": "https://data.sec.gov/submissions/CIK0000012927.json"
+  },
+  "sec/1318605/companyfacts.json.gz": {
+    "bytes": 252424,
+    "retrieved_at": "2026-10-05T00:43:15+00:00",
+    "sha256": "2883e9c4bbc0ec995a22e38aabca4bc77251901382738f0f8f2c71f81a4e9587",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json"
+  },
+  "sec/1318605/submissions.json.gz": {
+    "bytes": 47986,
+    "retrieved_at": "2026-10-05T00:43:15+00:00",
+    "sha256": "7bda20851acef7caf9567e049d1b91698a07089d17b360b3ad8fa236ceb180e6",
+    "url": "https://data.sec.gov/submissions/CIK0001318605.json"
+  },
+  "sec/1326801/companyfacts.json.gz": {
+    "bytes": 178216,
+    "retrieved_at": "2026-10-05T00:43:12+00:00",
+    "sha256": "9f96c093e3b405cfac9555966a69a26507064f6055e3e5f53d47da92065645d5",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001326801.json"
+  },
+  "sec/1326801/submissions.json.gz": {
+    "bytes": 86791,
+    "retrieved_at": "2026-10-05T00:43:12+00:00",
+    "sha256": "a881c5d9f6cef20dddedf27681b97b0ddddc4606d51328f83554c37a2839641c",
+    "url": "https://data.sec.gov/submissions/CIK0001326801.json"
+  },
+  "sec/1652044/companyfacts.json.gz": {
+    "bytes": 186823,
+    "retrieved_at": "2026-10-05T00:43:05+00:00",
+    "sha256": "1db2b76840cb7e581644de0b2d9cf0e6429911904c7cb2bcdfcfed0bdbe9de35",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001652044.json"
+  },
+  "sec/1652044/submissions.json.gz": {
+    "bytes": 58155,
+    "retrieved_at": "2026-10-05T00:43:05+00:00",
+    "sha256": "18de4d671345bd3babaf81f0bc77c6d0fed34d6bd04da87eb6af6eabf57a5a2b",
+    "url": "https://data.sec.gov/submissions/CIK0001652044.json"
+  },
+  "sec/1813756/companyfacts.json.gz": {
+    "bytes": 64421,
+    "retrieved_at": "2026-10-05T00:43:33+00:00",
+    "sha256": "2c56059ca5d7aa723257fa88843b7bd985fb86497d7934c444b629951af6ea38",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001813756.json"
+  },
+  "sec/1813756/submissions.json.gz": {
+    "bytes": 15024,
+    "retrieved_at": "2026-10-05T00:43:33+00:00",
+    "sha256": "0754d7fec2f8ad0b5144a281b3422f1e90d7f7a14c588a30108c2f967a0e6c3f",
+    "url": "https://data.sec.gov/submissions/CIK0001813756.json"
+  },
+  "sec/320193/companyfacts.json.gz": {
+    "bytes": 267138,
+    "retrieved_at": "2026-10-05T00:42:50+00:00",
+    "sha256": "5253a3661644eab18f836caeb240b6a72ee5ea22804089d5b72d7b5a0c85eb06",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json"
+  },
+  "sec/320193/submissions.json.gz": {
+    "bytes": 62328,
+    "retrieved_at": "2026-10-05T00:42:50+00:00",
+    "sha256": "dbe343f12965b32154dc59c42512981d39b8d30cecd3f3134e6cfc59f8660f3a",
+    "url": "https://data.sec.gov/submissions/CIK0000320193.json"
+  },
+  "sec/50863/companyfacts.json.gz": {
+    "bytes": 297786,
+    "retrieved_at": "2026-10-05T00:43:18+00:00",
+    "sha256": "e3c2ecb3cf3db9ce200f24cd4c5ba291043a22e0104d8334b8b66bcd0df2abcc",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000050863.json"
+  },
+  "sec/50863/submissions.json.gz": {
+    "bytes": 90482,
+    "retrieved_at": "2026-10-05T00:43:18+00:00",
+    "sha256": "dd22dc624fd6d59e92437b91b6970b96b40d0b5a2f643b90766a599cd325ee28",
+    "url": "https://data.sec.gov/submissions/CIK0000050863.json"
+  },
+  "sec/719739/companyfacts.json.gz": {
+    "bytes": 278027,
+    "retrieved_at": "2026-10-05T00:43:31+00:00",
+    "sha256": "4f5c16ee4d9e3f44e1504ab574af3420b8e2d757cc9a42e7cab1312064f51908",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000719739.json"
+  },
+  "sec/719739/submissions.json.gz": {
+    "bytes": 59735,
+    "retrieved_at": "2026-10-05T00:43:31+00:00",
+    "sha256": "85b05666b523c38dbc8ba47fe6add62986e0bc56b40debd14313bec8bbe39511",
+    "url": "https://data.sec.gov/submissions/CIK0000719739.json"
+  },
+  "sec/789019/companyfacts.json.gz": {
+    "bytes": 331729,
+    "retrieved_at": "2026-10-05T00:42:57+00:00",
+    "sha256": "e5eced40e4f5c6e8cbca47455c84a0fd43d9a3c65b33fa09eac17ab0a506d4f2",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json"
+  },
+  "sec/789019/submissions.json.gz": {
+    "bytes": 88910,
+    "retrieved_at": "2026-10-05T00:42:57+00:00",
+    "sha256": "f78ec9d01a7e90d7e9ba919afe17edea0a198e82eab241bbf49813aed99794d3",
+    "url": "https://data.sec.gov/submissions/CIK0000789019.json"
+  },
+  "sec/886158/companyfacts.json.gz": {
+    "bytes": 171667,
+    "retrieved_at": "2026-10-05T00:43:27+00:00",
+    "sha256": "6f0ce399d598d85e82cec45b3544a9a9c6dfaba574cecf49a6382956d1440501",
+    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000886158.json"
+  },
+  "sec/886158/submissions.json.gz": {
+    "bytes": 40515,
+    "retrieved_at": "2026-10-05T00:43:26+00:00",
+    "sha256": "7562fe9f137a49a3a79bb561ed7167e88fe324f2f0f5622b7a3dd70330708458",
+    "url": "https://data.sec.gov/submissions/CIK0000886158.json"
+  }
+}

@@ -1,0 +1,51 @@
+# SIC code ranges -> ECHO sector (GICS-like). Checked top to bottom; the first matching range wins,
+# so narrow ranges come before the broad ones they sit inside.
+ranges:
+  - [2830, 2836, Health Care]          # pharmaceuticals, biologicals
+  - [3840, 3851, Health Care]          # medical instruments
+  - [8000, 8099, Health Care]          # health services
+  - [5122, 5122, Health Care]          # drug wholesale
+  - [3570, 3579, Information Technology]   # computers
+  - [3600, 3699, Information Technology]   # electronics, semiconductors (3674)
+  - [3820, 3829, Information Technology]   # measuring instruments
+  - [7370, 7379, Information Technology]   # software and IT services
+  - [3710, 3716, Consumer Discretionary]   # motor vehicles
+  - [4800, 4899, Communication Services]   # telecom, broadcasting
+  - [2710, 2799, Communication Services]   # publishing
+  - [7810, 7819, Communication Services]   # motion pictures
+  - [4900, 4999, Utilities]
+  - [6500, 6553, Real Estate]
+  - [6798, 6798, Real Estate]          # REITs
+  - [6000, 6399, Financials]           # banks, credit, brokers, insurance carriers (bank variant applies to 6000-6399)
+  - [6400, 6799, Financials]
+  - [1300, 1399, Energy]               # oil & gas extraction
+  - [2900, 2999, Energy]               # petroleum refining
+  - [4610, 4619, Energy]               # pipelines
+  - [2840, 2844, Consumer Staples]     # soaps, cosmetics
+  - [100, 999, Consumer Staples]       # agriculture
+  - [2000, 2199, Consumer Staples]     # food, beverages, tobacco
+  - [5400, 5499, Consumer Staples]     # food stores
+  - [5900, 5912, Consumer Staples]     # drug stores
+  - [1000, 1299, Materials]            # mining
+  - [1400, 1499, Materials]
+  - [2600, 2699, Materials]            # paper
+  - [2800, 2899, Materials]            # chemicals (pharma handled above)
+  - [3200, 3399, Materials]            # stone, glass, primary metals
+  - [1500, 1799, Industrials]          # construction
+  - [3400, 3569, Industrials]          # fabricated metal, machinery
+  - [3580, 3599, Industrials]
+  - [3700, 3799, Industrials]          # aerospace, rail, ships (autos handled above)
+  - [4000, 4799, Industrials]          # transportation
+  - [8700, 8748, Industrials]          # engineering, management services
+  - [7300, 7369, Industrials]          # business services
+  - [7380, 7389, Industrials]
+  - [2200, 2599, Consumer Discretionary]   # textiles, apparel, furniture
+  - [3000, 3199, Consumer Discretionary]   # rubber, leather
+  - [3630, 3659, Consumer Discretionary]
+  - [3900, 3999, Consumer Discretionary]   # misc manufacturing, toys
+  - [5000, 5199, Industrials]          # wholesale
+  - [5200, 5999, Consumer Discretionary]   # retail
+  - [7000, 7299, Consumer Discretionary]   # hotels, personal services
+  - [7800, 7999, Consumer Discretionary]   # entertainment
+  - [8200, 8299, Consumer Discretionary]   # education
+default: Other

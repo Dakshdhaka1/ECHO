@@ -1,0 +1,33 @@
+# ECHO demo universe (DATA_STRATEGY.md §3). Demo mode serves only these companies, from data recorded
+# by `python -m pipelines.ingestion.record_sample`. as_of: "latest" = the snapshot's retrieval date.
+companies:
+  - {cik: 320193,  ticker: AAPL, name: Apple Inc.,            role: healthy,  as_of: [latest]}
+  - {cik: 789019,  ticker: MSFT, name: Microsoft Corp,        role: healthy,  as_of: [latest]}
+  - {cik: 1045810, ticker: NVDA, name: NVIDIA Corp,           role: healthy,  as_of: [latest]}
+  - {cik: 1652044, ticker: GOOGL, name: Alphabet Inc.,        role: healthy,  as_of: [latest],
+     news_query: '("Alphabet" OR "Google") sourcelang:english'}
+  - {cik: 1018724, ticker: AMZN, name: Amazon.com Inc.,       role: healthy,  as_of: [latest],
+     news_query: '"Amazon" sourcelang:english'}
+  - {cik: 1326801, ticker: META, name: Meta Platforms Inc.,   role: healthy,  as_of: [latest, "2022-12-31"],
+     news_query: '("Meta Platforms" OR "Facebook parent" OR "Zuckerberg") sourcelang:english'}
+  - {cik: 1318605, ticker: TSLA, name: Tesla Inc.,            role: mixed,    as_of: [latest]}
+  - {cik: 50863,   ticker: INTC, name: Intel Corp,            role: mixed,    as_of: [latest]}
+  - {cik: 12927,   ticker: BA,   name: Boeing Co,             role: mixed,    as_of: [latest]}
+  - cik: 886158
+    ticker: BBBY
+    name: Bed Bath & Beyond Inc.
+    role: historical_distress
+    as_of: ["2022-04-30", "2022-10-31", "2023-01-31"]
+    case_study: "Going-concern doubt disclosed January 2023; Chapter 11 filed April 2023."
+  - cik: 719739
+    ticker: SIVB
+    name: SVB Financial Group
+    role: historical_distress
+    as_of: ["2022-03-31", "2022-09-30", "2022-12-31"]
+    case_study: "Silicon Valley Bank was closed by regulators in March 2023; the holding company filed Chapter 11."
+  - cik: 1813756
+    ticker: WE
+    name: WeWork Inc.
+    role: historical_distress
+    as_of: ["2022-11-30", "2023-05-31"]
+    case_study: "Going-concern doubt disclosed August 2023; Chapter 11 filed November 2023."

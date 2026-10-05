@@ -1,0 +1,7 @@
+model: financial_anomaly
+dataset: data/processed/features/distress.parquet
+split:
+  train: [2010, 2019]
+  test: [2020, 2024]
+n_estimators: 400
+inject_fraction: 0.02
