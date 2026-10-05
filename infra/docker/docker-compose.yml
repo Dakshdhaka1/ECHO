@@ -57,6 +57,9 @@ services:
       context: ../../ml-service
       args:
         INSTALL_TRAINING: ${ML_INSTALL_TRAINING:-true}
+    # Runs as the host user so the bind-mounted artifacts/ and mlruns/ are writable on Linux (monitoring log,
+    # retrained model versions). Set ECHO_UID/ECHO_GID in .env to `id -u` / `id -g`; Docker Desktop ignores it.
+    user: "${ECHO_UID:-10001}:${ECHO_GID:-10001}"
     environment:
       <<: *common-env
       MODEL_DIR: /app/artifacts

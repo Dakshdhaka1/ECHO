@@ -70,6 +70,8 @@ jobs:
       - name: Start the stack in demo mode
         run: |
           cp .env.example .env
+          echo "ECHO_UID=$(id -u)" >> .env   # bind mounts are owned by the runner user
+          echo "ECHO_GID=$(id -g)" >> .env
           ML_INSTALL_TRAINING=false docker compose --env-file .env -f infra/docker/docker-compose.yml up -d --build --wait --wait-timeout 600
       - uses: actions/setup-node@v5
         with:

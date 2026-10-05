@@ -115,6 +115,9 @@ docker compose --env-file .env -f infra/docker/docker-compose.yml up --build
 Register with `admin@echo.local` (see `ADMIN_EMAILS`) to get the **Admin & MLOps** page.
 `ML_INSTALL_TRAINING=false` builds a slim ML image without the training stack.
 
+On **Linux**, add `ECHO_UID=$(id -u)` and `ECHO_GID=$(id -g)` to `.env` so the ML container can write the
+bind-mounted model folders.
+
 Model binaries (`*.onnx`, `*.joblib`) are stored with **Git LFS**: run `git lfs install` before cloning, or
 `git lfs pull` afterwards, so the trained champions (including the 79 MB news-sentiment transformer) are present.
 
